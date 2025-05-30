@@ -1,41 +1,64 @@
 
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, MapPin, Bed, Bath, Square } from 'lucide-react';
 
 const properties = [
   {
     id: 1,
-    name: 'Banana Island, Lagos',
-    price: '₦100,000,000',
-    image: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    name: 'East Legon Luxury Villa',
+    priceGHS: 1200000,
+    priceUSD: 100000,
+    image: '/lovable-uploads/56ab0d76-187c-4e43-8987-72ec33523c4d.png',
     beds: 4,
     baths: 3,
-    sqft: '1600 m²',
-    location: 'Lagos, Nigeria'
+    sqft: '300 m²',
+    location: 'East Legon, Accra'
   },
   {
     id: 2,
-    name: 'Parkview Estate, Lagos',
-    price: '₦200,000,000',
-    image: 'https://images.unsplash.com/photo-1460574283810-2aab119d8511?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    name: 'Airport Hills Estate',
+    priceGHS: 1800000,
+    priceUSD: 150000,
+    image: '/lovable-uploads/c25a6ce0-4d21-4693-b1d6-c673df380c02.png',
     beds: 5,
     baths: 4,
-    sqft: '1800 m²',
-    location: 'Lagos, Nigeria'
+    sqft: '450 m²',
+    location: 'Airport Hills, Accra'
   },
   {
     id: 3,
-    name: 'Eko Atlantic, Lagos',
-    price: '₦500,000,000',
-    image: 'https://images.unsplash.com/photo-1527576539890-dfa815648363?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    name: 'Tema Community 25',
+    priceGHS: 960000,
+    priceUSD: 80000,
+    image: '/lovable-uploads/1961377a-f170-4b38-a356-d3ec9c96174c.png',
     beds: 3,
     baths: 2,
-    sqft: '1600 m²',
-    location: 'Lagos, Nigeria'
+    sqft: '250 m²',
+    location: 'Tema, Greater Accra'
   }
 ];
 
 const PopularProperties = () => {
+  const [currency, setCurrency] = useState('GHS');
+
+  useEffect(() => {
+    // Simple location-based currency detection
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (userTimeZone.includes('Ghana') || userTimeZone.includes('Africa/Accra')) {
+      setCurrency('GHS');
+    } else {
+      setCurrency('USD');
+    }
+  }, []);
+
+  const formatPrice = (property: typeof properties[0]) => {
+    if (currency === 'GHS') {
+      return `₵${property.priceGHS.toLocaleString()}`;
+    }
+    return `$${property.priceUSD.toLocaleString()}`;
+  };
+
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,14 +66,14 @@ const PopularProperties = () => {
         <div className="flex items-center justify-between mb-12">
           <div>
             <div className="flex items-center text-sm font-medium text-gray-600 mb-2">
-              <div className="w-12 h-px bg-gray-400 mr-4"></div>
+              <div className="w-12 h-px bg-orange-400 mr-4"></div>
               POPULAR
             </div>
-            <h2 className="text-4xl font-bold text-gray-900">Our Popular Homes</h2>
+            <h2 className="text-4xl font-bold text-black">Our Popular Homes in Ghana</h2>
           </div>
           <Button
             variant="ghost"
-            className="hidden md:flex items-center text-blue-600 hover:text-blue-700"
+            className="hidden md:flex items-center text-orange-600 hover:text-orange-700"
           >
             Explore All
             <ArrowRight className="ml-2 w-4 h-4" />
@@ -81,7 +104,7 @@ const PopularProperties = () => {
                   {property.location}
                 </div>
                 
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{property.name}</h3>
+                <h3 className="text-xl font-bold text-black mb-4">{property.name}</h3>
                 
                 {/* Property Features */}
                 <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
@@ -101,10 +124,10 @@ const PopularProperties = () => {
 
                 {/* Price and Action */}
                 <div className="flex items-center justify-between">
-                  <div className="text-2xl font-bold text-gray-900">{property.price}</div>
+                  <div className="text-2xl font-bold text-black">{formatPrice(property)}</div>
                   <Button
                     size="sm"
-                    className="bg-gray-900 hover:bg-gray-800 text-white px-6"
+                    className="bg-orange-500 hover:bg-orange-600 text-white px-6"
                   >
                     Book Now
                   </Button>
@@ -118,7 +141,7 @@ const PopularProperties = () => {
         <div className="md:hidden text-center mt-8">
           <Button
             variant="outline"
-            className="border-blue-600 text-blue-600 hover:bg-blue-50"
+            className="border-orange-600 text-orange-600 hover:bg-orange-50"
           >
             Explore All
             <ArrowRight className="ml-2 w-4 h-4" />

@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, MapPin, Home, DollarSign } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -9,17 +9,42 @@ const SearchSection = () => {
   const [location, setLocation] = useState('');
   const [propertyType, setPropertyType] = useState('');
   const [budget, setBudget] = useState('');
+  const [currency, setCurrency] = useState('GHS');
+
+  useEffect(() => {
+    // Simple location-based currency detection
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (userTimeZone.includes('Ghana') || userTimeZone.includes('Africa/Accra')) {
+      setCurrency('GHS');
+    } else {
+      setCurrency('USD');
+    }
+  }, []);
 
   const handleSearch = () => {
-    console.log('Searching with:', { location, propertyType, budget });
+    console.log('Searching with:', { location, propertyType, budget, currency });
     // Here you would implement the actual search functionality
   };
+
+  const budgetOptions = currency === 'GHS' ? [
+    { value: '0-600000', label: 'Under ₵600K' },
+    { value: '600000-1200000', label: '₵600K - ₵1.2M' },
+    { value: '1200000-2400000', label: '₵1.2M - ₵2.4M' },
+    { value: '2400000-6000000', label: '₵2.4M - ₵6M' },
+    { value: '6000000+', label: '₵6M+' }
+  ] : [
+    { value: '0-50000', label: 'Under $50K' },
+    { value: '50000-100000', label: '$50K - $100K' },
+    { value: '100000-200000', label: '$100K - $200K' },
+    { value: '200000-500000', label: '$200K - $500K' },
+    { value: '500000+', label: '$500K+' }
+  ];
 
   return (
     <section className="relative -mt-20 z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Search for available properties</h2>
+          <h2 className="text-2xl font-bold text-black mb-2">Search for available properties in Ghana</h2>
           <p className="text-gray-600">Find your dream home with our advanced AI-powered search</p>
         </div>
 
@@ -52,9 +77,9 @@ const SearchSection = () => {
               <SelectContent>
                 <SelectItem value="apartment">Apartment</SelectItem>
                 <SelectItem value="house">House</SelectItem>
-                <SelectItem value="condo">Condo</SelectItem>
-                <SelectItem value="townhouse">Townhouse</SelectItem>
                 <SelectItem value="villa">Villa</SelectItem>
+                <SelectItem value="townhouse">Townhouse</SelectItem>
+                <SelectItem value="compound">Compound House</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -63,18 +88,18 @@ const SearchSection = () => {
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               <DollarSign className="inline w-4 h-4 mr-1" />
-              Budget
+              Budget ({currency})
             </label>
             <Select value={budget} onValueChange={setBudget}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select budget" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="0-500000">Under $500K</SelectItem>
-                <SelectItem value="500000-1000000">$500K - $1M</SelectItem>
-                <SelectItem value="1000000-2000000">$1M - $2M</SelectItem>
-                <SelectItem value="2000000-5000000">$2M - $5M</SelectItem>
-                <SelectItem value="5000000+">$5M+</SelectItem>
+                {budgetOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -82,7 +107,7 @@ const SearchSection = () => {
           {/* Search Button */}
           <Button
             onClick={handleSearch}
-            className="bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white h-10 px-8 rounded-lg transition-all transform hover:scale-105"
+            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white h-10 px-8 rounded-lg transition-all transform hover:scale-105"
           >
             <Search className="w-4 h-4 mr-2" />
             Search Now
