@@ -8,16 +8,16 @@ const testimonials = [
     name: 'Kwame Asante',
     location: 'East Legon, Accra',
     rating: 5,
-    text: 'RealRate helped me find my dream home in East Legon. The AI-powered price prediction was incredibly accurate, and I saved thousands on my purchase. Highly recommended!',
-    avatar: '/lovable-uploads/56ab0d76-187c-4e43-8987-72ec33523c4d.png'
+    text: 'RealRate helped me find my dream home in East Legon. The AI-powered price prediction was incredibly accurate, and I saved thousands on my purchase. Highly recommended',
+    avatar: '/lovable-uploads/6b288a42-15bd-4c5d-a7cf-238470f6e2c9.png'
   },
   {
     id: 2,
     name: 'Akosua Mensah',
     location: 'Tema, Greater Accra',
     rating: 5,
-    text: 'The booking process was seamless, and the property matched exactly what was advertised. Congo and his team provided excellent service throughout. Five stars!',
-    avatar: '/lovable-uploads/c25a6ce0-4d21-4693-b1d6-c673df380c02.png'
+    text: 'The booking process was seamless, and the property matched exactly what was advertised. Congo and his team provided excellent service throughout. Five stars',
+    avatar: '/lovable-uploads/7edcfe81-d0cd-47a3-bb86-04e08df130e4.png'
   }
 ];
 
@@ -94,7 +94,7 @@ const CustomerTestimonials = () => {
 
         {/* Call to Action */}
         <div className={`text-center mt-12 transform transition-all duration-1000 delay-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <p className="text-gray-600 mb-4">Ready to find your dream home?</p>
+          <p className="text-gray-600 mb-4">Ready to find your dream home</p>
           <button className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-orange-600 hover:to-orange-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
             Start Your Journey
           </button>
