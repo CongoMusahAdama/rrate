@@ -1,4 +1,3 @@
-
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -83,16 +82,16 @@ const properties = [
 
 const Properties = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-gray-50">
       <Header />
       
       <div className="pt-20 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl lg:text-5xl font-bold text-black mb-4">
               Find Your
-              <span className="block bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
                 Dream Property
               </span>
             </h1>
@@ -144,7 +143,7 @@ const Properties = () => {
                 </Select>
               </div>
               
-              <Button className="bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 h-10">
+              <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 h-10">
                 <Filter className="w-4 h-4 mr-2" />
                 Search
               </Button>
@@ -154,7 +153,7 @@ const Properties = () => {
           {/* Results Header */}
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">Properties for Sale</h2>
+              <h2 className="text-2xl font-bold text-black">Properties for Sale</h2>
               <p className="text-gray-600">{properties.length} properties found</p>
             </div>
             <Select>
@@ -184,7 +183,7 @@ const Properties = () => {
                     alt={property.name}
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                   />
-                  <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="absolute top-4 left-4 bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                     {property.status}
                   </div>
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-gray-900 px-3 py-1 rounded-full text-sm font-medium">
@@ -199,7 +198,7 @@ const Properties = () => {
                     {property.location}
                   </div>
                   
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">{property.name}</h3>
+                  <h3 className="text-xl font-bold text-black mb-4">{property.name}</h3>
                   
                   {/* Property Features */}
                   <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
@@ -219,18 +218,18 @@ const Properties = () => {
 
                   {/* Price and Actions */}
                   <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-                    <div className="text-2xl font-bold text-gray-900">{property.price}</div>
+                    <div className="text-2xl font-bold text-black">{property.price}</div>
                     <div className="flex space-x-2">
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-blue-600 text-blue-600 hover:bg-blue-50"
+                        className="border-orange-600 text-orange-600 hover:bg-orange-50"
                       >
                         View Details
                       </Button>
                       <Button
                         size="sm"
-                        className="bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600"
+                        className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
                       >
                         Contact
                       </Button>
@@ -245,7 +244,7 @@ const Properties = () => {
           <div className="text-center mt-12">
             <Button
               variant="outline"
-              className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3"
+              className="border-orange-600 text-orange-600 hover:bg-orange-50 px-8 py-3"
             >
               Load More Properties
             </Button>

@@ -64,20 +64,20 @@ const PredictPrice = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-gray-50">
       <Header />
       
       <div className="pt-20 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page Header */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center bg-blue-100 text-blue-800 text-sm font-medium px-4 py-2 rounded-full mb-6">
+            <div className="inline-flex items-center bg-orange-100 text-orange-800 text-sm font-medium px-4 py-2 rounded-full mb-6">
               <Calculator className="w-4 h-4 mr-2" />
               AI Price Prediction
             </div>
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl lg:text-5xl font-bold text-black mb-4">
               Get Your Property
-              <span className="block bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
                 Price Estimate
               </span>
             </h1>
@@ -90,8 +90,8 @@ const PredictPrice = () => {
             {/* Input Form */}
             <Card className="shadow-xl border-0">
               <CardHeader>
-                <CardTitle className="flex items-center text-2xl">
-                  <Home className="w-6 h-6 mr-2 text-blue-600" />
+                <CardTitle className="flex items-center text-2xl text-black">
+                  <Home className="w-6 h-6 mr-2 text-orange-600" />
                   Property Details
                 </CardTitle>
                 <CardDescription>
@@ -201,7 +201,7 @@ const PredictPrice = () => {
                 <Button
                   onClick={handlePredict}
                   disabled={isLoading || !formData.location || !formData.propertyType}
-                  className="w-full bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 h-12 text-lg font-semibold"
+                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 h-12 text-lg font-semibold"
                 >
                   {isLoading ? (
                     <div className="flex items-center">
@@ -223,7 +223,7 @@ const PredictPrice = () => {
               {prediction ? (
                 <>
                   {/* Main Price Card */}
-                  <Card className="shadow-xl border-0 bg-gradient-to-br from-blue-600 to-teal-500 text-white">
+                  <Card className="shadow-xl border-0 bg-gradient-to-br from-orange-500 to-orange-600 text-white">
                     <CardHeader>
                       <CardTitle className="flex items-center text-2xl">
                         <DollarSign className="w-6 h-6 mr-2" />
@@ -234,18 +234,18 @@ const PredictPrice = () => {
                       <div className="text-5xl font-bold mb-2">
                         {formatPrice(prediction.estimatedPrice)}
                       </div>
-                      <div className="text-blue-100 mb-4">
+                      <div className="text-orange-100 mb-4">
                         Range: {formatPrice(prediction.priceRange.min)} - {formatPrice(prediction.priceRange.max)}
                       </div>
                       <div className="flex items-center justify-between bg-white/20 rounded-lg p-4">
                         <div>
-                          <div className="text-sm text-blue-100">Model Accuracy</div>
+                          <div className="text-sm text-orange-100">Model Accuracy</div>
                           <div className="text-2xl font-bold">{prediction.accuracy}%</div>
                         </div>
                         <div className="flex items-center">
                           <TrendingUp className={`w-6 h-6 mr-2 ${prediction.marketTrend === 'up' ? 'text-green-300' : 'text-red-300'}`} />
                           <div>
-                            <div className="text-sm text-blue-100">Market Trend</div>
+                            <div className="text-sm text-orange-100">Market Trend</div>
                             <div className="text-lg font-semibold">
                               {prediction.marketTrend === 'up' ? '+' : '-'}{prediction.trendPercentage}%
                             </div>
@@ -264,7 +264,7 @@ const PredictPrice = () => {
                             <TrendingUp className="w-6 h-6 text-green-600" />
                           </div>
                           <div className="text-sm text-gray-600 mb-1">Market Position</div>
-                          <div className="text-xl font-bold text-gray-900">Above Average</div>
+                          <div className="text-xl font-bold text-black">Above Average</div>
                         </div>
                       </CardContent>
                     </Card>
@@ -272,11 +272,11 @@ const PredictPrice = () => {
                     <Card className="shadow-lg">
                       <CardContent className="p-6">
                         <div className="text-center">
-                          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <Calculator className="w-6 h-6 text-blue-600" />
+                          <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <Calculator className="w-6 h-6 text-orange-600" />
                           </div>
                           <div className="text-sm text-gray-600 mb-1">Price per Sq Ft</div>
-                          <div className="text-xl font-bold text-gray-900">
+                          <div className="text-xl font-bold text-black">
                             {formData.squareFootage ? formatPrice(prediction.estimatedPrice / parseInt(formData.squareFootage)) : 'N/A'}
                           </div>
                         </div>
@@ -287,10 +287,10 @@ const PredictPrice = () => {
               ) : (
                 <Card className="shadow-xl border-0 border-dashed border-gray-300">
                   <CardContent className="p-12 text-center">
-                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Calculator className="w-8 h-8 text-gray-400" />
+                    <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Calculator className="w-8 h-8 text-orange-600" />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Ready to Predict</h3>
+                    <h3 className="text-xl font-semibold text-black mb-2">Ready to Predict</h3>
                     <p className="text-gray-600">
                       Fill in the property details to get your AI-powered price estimate
                     </p>
