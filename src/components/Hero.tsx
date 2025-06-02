@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -22,7 +21,7 @@ const Hero = () => {
     if (userTimeZone.includes('Ghana') || userTimeZone.includes('Africa/Accra')) {
       setCurrency('GHS');
     } else {
-      setCurrency('USD');
+      setCurrency('GHS'); // Always use GHS as requested
     }
 
     // Cycle through images every 3 seconds
@@ -34,10 +33,7 @@ const Hero = () => {
   }, []);
 
   const formatPrice = (price: number) => {
-    if (currency === 'GHS') {
-      return `₵${(price * 12).toLocaleString()}`; // Approximate conversion
-    }
-    return `$${price.toLocaleString()}`;
+    return `₵${(price * 12).toLocaleString()}`; // Always use Ghana Cedis
   };
 
   return (
@@ -73,15 +69,17 @@ const Hero = () => {
             
             <div className={`flex flex-col sm:flex-row gap-4 mb-12 transform transition-all duration-1000 delay-900 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
               <Link
-                to="/predict"
+                to="/login"
                 className="inline-flex items-center justify-center bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Get Started
-                <ArrowRight className="ml-2" size={20} />
               </Link>
-              <button className="inline-flex items-center justify-center bg-white text-gray-800 px-8 py-4 rounded-xl text-lg font-semibold border-2 border-gray-200 hover:border-orange-300 transition-all transform hover:scale-105 shadow-md hover:shadow-lg">
+              <Link
+                to="/login"
+                className="inline-flex items-center justify-center bg-white text-gray-800 px-8 py-4 rounded-xl text-lg font-semibold border-2 border-gray-200 hover:border-orange-300 transition-all transform hover:scale-105 shadow-md hover:shadow-lg"
+              >
                 Book Now
-              </button>
+              </Link>
             </div>
 
             {/* Stats */}

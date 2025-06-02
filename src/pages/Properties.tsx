@@ -11,73 +11,73 @@ import { Search, MapPin, Bed, Bath, Square, Filter } from 'lucide-react';
 const properties = [
   {
     id: 1,
-    name: 'Modern Villa in Beverly Hills',
-    price: '$2,500,000',
-    image: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    name: 'Modern Villa in East Legon',
+    price: '₵2,500,000',
+    image: '/lovable-uploads/d35db465-e25d-4f59-b6dc-8b643a842ce7.png',
     beds: 5,
     baths: 4,
     sqft: '3200 sq ft',
-    location: 'Beverly Hills, CA',
+    location: 'East Legon, Accra',
     type: 'Villa',
     status: 'For Sale'
   },
   {
     id: 2,
-    name: 'Luxury Penthouse Downtown',
-    price: '$1,800,000',
-    image: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    name: 'Luxury Penthouse Cantonments',
+    price: '₵1,800,000',
+    image: '/lovable-uploads/dbe9155c-45cc-425a-9f2a-6f9eddd106e2.png',
     beds: 3,
     baths: 3,
     sqft: '2400 sq ft',
-    location: 'Downtown LA, CA',
+    location: 'Cantonments, Accra',
     type: 'Penthouse',
     status: 'For Sale'
   },
   {
     id: 3,
     name: 'Contemporary Family Home',
-    price: '$950,000',
-    image: 'https://images.unsplash.com/photo-1460574283810-2aab119d8511?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    price: '₵950,000',
+    image: '/lovable-uploads/66307f55-92a6-4a22-ae71-482fe91c8e43.png',
     beds: 4,
     baths: 3,
     sqft: '2800 sq ft',
-    location: 'Santa Monica, CA',
+    location: 'Airport Residential, Accra',
     type: 'House',
     status: 'For Sale'
   },
   {
     id: 4,
-    name: 'Waterfront Condo',
-    price: '$1,200,000',
-    image: 'https://images.unsplash.com/photo-1527576539890-dfa815648363?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    name: 'Waterfront Apartment',
+    price: '₵1,200,000',
+    image: '/lovable-uploads/d35db465-e25d-4f59-b6dc-8b643a842ce7.png',
     beds: 2,
     baths: 2,
     sqft: '1600 sq ft',
-    location: 'Marina del Rey, CA',
-    type: 'Condo',
+    location: 'Labadi, Accra',
+    type: 'Apartment',
     status: 'For Sale'
   },
   {
     id: 5,
-    name: 'Mid-Century Modern',
-    price: '$1,750,000',
-    image: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    name: 'Modern Executive Home',
+    price: '₵1,750,000',
+    image: '/lovable-uploads/dbe9155c-45cc-425a-9f2a-6f9eddd106e2.png',
     beds: 4,
     baths: 3,
     sqft: '2600 sq ft',
-    location: 'West Hollywood, CA',
+    location: 'Spintex, Accra',
     type: 'House',
     status: 'For Sale'
   },
   {
     id: 6,
     name: 'Elegant Townhouse',
-    price: '$850,000',
-    image: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    price: '₵850,000',
+    image: '/lovable-uploads/66307f55-92a6-4a22-ae71-482fe91c8e43.png',
     beds: 3,
     baths: 2,
     sqft: '2000 sq ft',
-    location: 'Pasadena, CA',
+    location: 'Tema, Greater Accra',
     type: 'Townhouse',
     status: 'For Sale'
   }
@@ -106,7 +106,7 @@ const Properties = () => {
         <div className="pt-20 pb-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Page Header */}
-            <div className="text-center mb-12">
+            <div className="text-center mb-12 animate-fade-in">
               <h1 className="text-4xl lg:text-5xl font-bold text-black mb-4">
                 Find Your
                 <span className="block bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
@@ -119,7 +119,7 @@ const Properties = () => {
             </div>
 
             {/* Search and Filters */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 animate-fade-in">
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -153,10 +153,10 @@ const Properties = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="any">Any Price</SelectItem>
-                      <SelectItem value="0-500000">Under $500K</SelectItem>
-                      <SelectItem value="500000-1000000">$500K - $1M</SelectItem>
-                      <SelectItem value="1000000-2000000">$1M - $2M</SelectItem>
-                      <SelectItem value="2000000+">$2M+</SelectItem>
+                      <SelectItem value="0-500000">Under ₵500K</SelectItem>
+                      <SelectItem value="500000-1000000">₵500K - ₵1M</SelectItem>
+                      <SelectItem value="1000000-2000000">₵1M - ₵2M</SelectItem>
+                      <SelectItem value="2000000+">₵2M+</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -169,7 +169,7 @@ const Properties = () => {
             </div>
 
             {/* Results Header */}
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-6 animate-fade-in">
               <div>
                 <h2 className="text-2xl font-bold text-black">Properties for Sale</h2>
                 <p className="text-gray-600">{properties.length} properties found</p>
@@ -189,17 +189,18 @@ const Properties = () => {
 
             {/* Properties Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {properties.map((property) => (
+              {properties.map((property, index) => (
                 <div
                   key={property.id}
-                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in"
+                  style={{ animationDelay: `${index * 150}ms` }}
                 >
                   {/* Property Image */}
                   <div className="relative h-64 overflow-hidden">
                     <img
                       src={property.image}
                       alt={property.name}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                     />
                     <div className="absolute top-4 left-4 bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                       {property.status}
@@ -241,14 +242,14 @@ const Properties = () => {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="border-orange-600 text-orange-600 hover:bg-orange-50"
+                          className="border-orange-600 text-orange-600 hover:bg-orange-50 transition-all duration-300"
                           onClick={() => handleViewDetails(property)}
                         >
                           View Details
                         </Button>
                         <Button
                           size="sm"
-                          className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+                          className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 transition-all duration-300"
                           onClick={() => handleContact(property)}
                         >
                           Contact
@@ -264,7 +265,7 @@ const Properties = () => {
             <div className="text-center mt-12">
               <Button
                 variant="outline"
-                className="border-orange-600 text-orange-600 hover:bg-orange-50 px-8 py-3"
+                className="border-orange-600 text-orange-600 hover:bg-orange-50 px-8 py-3 transition-all duration-300"
               >
                 Load More Properties
               </Button>
