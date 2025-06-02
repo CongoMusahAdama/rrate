@@ -31,11 +31,11 @@ const PropertySearch = ({ onSearch }: PropertySearchProps) => {
   };
 
   const handlePropertyTypeChange = (value: string) => {
-    setFilters({ ...filters, propertyType: value });
+    setFilters({ ...filters, propertyType: value === 'all' ? '' : value });
   };
 
   const handlePriceRangeChange = (value: string) => {
-    setFilters({ ...filters, priceRange: value });
+    setFilters({ ...filters, priceRange: value === 'all' ? '' : value });
   };
 
   return (
@@ -56,12 +56,12 @@ const PropertySearch = ({ onSearch }: PropertySearchProps) => {
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
-          <Select onValueChange={handlePropertyTypeChange} value={filters.propertyType}>
+          <Select onValueChange={handlePropertyTypeChange} value={filters.propertyType || 'all'}>
             <SelectTrigger className="border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]">
               <SelectValue placeholder="Any Type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Any Type</SelectItem>
+              <SelectItem value="all">Any Type</SelectItem>
               <SelectItem value="house">House</SelectItem>
               <SelectItem value="condo">Condo</SelectItem>
               <SelectItem value="townhouse">Townhouse</SelectItem>
@@ -74,12 +74,12 @@ const PropertySearch = ({ onSearch }: PropertySearchProps) => {
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
-          <Select onValueChange={handlePriceRangeChange} value={filters.priceRange}>
+          <Select onValueChange={handlePriceRangeChange} value={filters.priceRange || 'all'}>
             <SelectTrigger className="border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]">
               <SelectValue placeholder="Any Price" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Any Price</SelectItem>
+              <SelectItem value="all">Any Price</SelectItem>
               <SelectItem value="0-500000">Under ₵500K</SelectItem>
               <SelectItem value="500000-1000000">₵500K - ₵1M</SelectItem>
               <SelectItem value="1000000-2000000">₵1M - ₵2M</SelectItem>
