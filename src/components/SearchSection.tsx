@@ -12,13 +12,8 @@ const SearchSection = () => {
   const [currency, setCurrency] = useState('GHS');
 
   useEffect(() => {
-    // Simple location-based currency detection
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    if (userTimeZone.includes('Ghana') || userTimeZone.includes('Africa/Accra')) {
-      setCurrency('GHS');
-    } else {
-      setCurrency('USD');
-    }
+    // Always use GHS for Ghana
+    setCurrency('GHS');
   }, []);
 
   const handleSearch = () => {
@@ -26,18 +21,12 @@ const SearchSection = () => {
     // Here you would implement the actual search functionality
   };
 
-  const budgetOptions = currency === 'GHS' ? [
+  const budgetOptions = [
     { value: '0-600000', label: 'Under ₵600K' },
     { value: '600000-1200000', label: '₵600K - ₵1.2M' },
     { value: '1200000-2400000', label: '₵1.2M - ₵2.4M' },
     { value: '2400000-6000000', label: '₵2.4M - ₵6M' },
     { value: '6000000+', label: '₵6M+' }
-  ] : [
-    { value: '0-50000', label: 'Under $50K' },
-    { value: '50000-100000', label: '$50K - $100K' },
-    { value: '100000-200000', label: '$100K - $200K' },
-    { value: '200000-500000', label: '$200K - $500K' },
-    { value: '500000+', label: '$500K+' }
   ];
 
   return (
@@ -60,7 +49,7 @@ const SearchSection = () => {
               placeholder="Enter city or area"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full"
+              className="w-full border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]"
             />
           </div>
 
@@ -71,7 +60,7 @@ const SearchSection = () => {
               Property Type
             </label>
             <Select value={propertyType} onValueChange={setPropertyType}>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]">
                 <SelectValue placeholder="Select type" />
               </SelectTrigger>
               <SelectContent>
@@ -91,7 +80,7 @@ const SearchSection = () => {
               Budget ({currency})
             </label>
             <Select value={budget} onValueChange={setBudget}>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]">
                 <SelectValue placeholder="Select budget" />
               </SelectTrigger>
               <SelectContent>
@@ -107,7 +96,7 @@ const SearchSection = () => {
           {/* Search Button */}
           <Button
             onClick={handleSearch}
-            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white h-10 px-8 rounded-lg transition-all transform hover:scale-105"
+            className="wine-gradient hover:wine-gradient-hover text-white h-10 px-8 rounded-lg transition-all transform hover:scale-105"
           >
             <Search className="w-4 h-4 mr-2" />
             Search Now

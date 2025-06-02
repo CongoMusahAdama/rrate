@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [currency, setCurrency] = useState('GHS');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const heroImages = [
@@ -15,14 +14,6 @@ const Hero = () => {
 
   useEffect(() => {
     setIsVisible(true);
-    
-    // Simple location-based currency detection
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    if (userTimeZone.includes('Ghana') || userTimeZone.includes('Africa/Accra')) {
-      setCurrency('GHS');
-    } else {
-      setCurrency('GHS'); // Always use GHS as requested
-    }
 
     // Cycle through images every 3 seconds
     const imageInterval = setInterval(() => {
@@ -33,14 +24,14 @@ const Hero = () => {
   }, []);
 
   const formatPrice = (price: number) => {
-    return `₵${(price * 12).toLocaleString()}`; // Always use Ghana Cedis
+    return `₵${(price * 12).toLocaleString()}`;
   };
 
   return (
     <section 
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/lovable-uploads/f9ce6cf2-3ff9-43fe-badd-361826278f95.png')`,
+        backgroundImage: `linear-gradient(rgba(114, 47, 55, 0.4), rgba(114, 47, 55, 0.6)), url('/lovable-uploads/f9ce6cf2-3ff9-43fe-badd-361826278f95.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
@@ -48,27 +39,27 @@ const Hero = () => {
     >
       {/* Background Elements */}
       <div className="absolute inset-0 bg-black/20"></div>
-      <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-      <div className="absolute bottom-1/4 left-1/4 w-72 h-72 bg-gray-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
+      <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-[#722f37] opacity-10 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+      <div className="absolute bottom-1/4 left-1/4 w-72 h-72 bg-white opacity-10 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className={`max-w-xl transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <div className="inline-flex items-center bg-orange-100/90 text-orange-800 text-sm font-medium px-4 py-2 rounded-full mb-6 animate-fade-in backdrop-blur-sm">
-              <span className="w-2 h-2 bg-orange-500 rounded-full mr-2 animate-pulse"></span>
+            <div className="inline-flex items-center bg-white/90 text-[#722f37] text-sm font-medium px-4 py-2 rounded-full mb-6 animate-fade-in backdrop-blur-sm">
+              <span className="w-2 h-2 bg-[#722f37] rounded-full mr-2 animate-pulse"></span>
               AI-Powered Property Valuation for Ghana
             </div>
             
             <h1 className={`text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 transform transition-all duration-1000 delay-300 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} drop-shadow-lg`}>
               Find A House
-              <span className="block bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">
+              <span className="block text-[#8d4a52]">
                 That Suits You
               </span>
             </h1>
             
-            <p className={`text-xl text-orange-100 mb-2 leading-relaxed transform transition-all duration-1000 delay-500 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} drop-shadow-md`}>
-              <span className="font-bold text-orange-300">Real-time, Real Estate Rates.</span>
+            <p className={`text-xl text-white mb-2 leading-relaxed transform transition-all duration-1000 delay-500 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} drop-shadow-md`}>
+              <span className="font-bold text-[#8d4a52]">Real-time, Real Estate Rates.</span>
             </p>
             
             <p className={`text-lg text-gray-200 mb-8 leading-relaxed transform transition-all duration-1000 delay-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} drop-shadow-md`}>
@@ -78,13 +69,13 @@ const Hero = () => {
             <div className={`flex flex-col sm:flex-row gap-4 mb-12 transform transition-all duration-1000 delay-900 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
               <Link
                 to="/login"
-                className="inline-flex items-center justify-center bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center wine-gradient text-white px-8 py-4 rounded-xl text-lg font-semibold hover:wine-gradient-hover transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Get Started
               </Link>
               <Link
                 to="/properties"
-                className="inline-flex items-center justify-center bg-white/90 text-gray-800 px-8 py-4 rounded-xl text-lg font-semibold border-2 border-white/20 hover:bg-white transition-all transform hover:scale-105 shadow-md hover:shadow-lg backdrop-blur-sm"
+                className="inline-flex items-center justify-center bg-white/90 text-[#722f37] px-8 py-4 rounded-xl text-lg font-semibold border-2 border-white/20 hover:bg-white transition-all transform hover:scale-105 shadow-md hover:shadow-lg backdrop-blur-sm"
               >
                 Book Now
               </Link>

@@ -3,12 +3,12 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PropertyDetailsModal from '@/components/PropertyDetailsModal';
 import ContactModal from '@/components/ContactModal';
+import PropertySearch, { SearchFilters } from '@/components/PropertySearch';
+import PropertyCard from '@/components/PropertyCard';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, MapPin, Bed, Bath, Square, Filter } from 'lucide-react';
 
-const properties = [
+const allProperties = [
   {
     id: 1,
     name: 'Modern Villa in East Legon',
@@ -84,23 +84,60 @@ const properties = [
 ];
 
 const Properties = () => {
+  const [filteredProperties, setFilteredProperties] = useState(allProperties);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [noResults, setNoResults] = useState(false);
 
-  const handleViewDetails = (property: typeof properties[0]) => {
+  const handleSearch = (filters: SearchFilters) => {
+    let filtered = allProperties;
+
+    // Filter by location
+    if (filters.location) {
+      filtered = filtered.filter(property =>
+        property.location.toLowerCase().includes(filters.location.toLowerCase()) ||
+        property.name.toLowerCase().includes(filters.location.toLowerCase())
+      );
+    }
+
+    // Filter by property type
+    if (filters.propertyType) {
+      filtered = filtered.filter(property =>
+        property.type.toLowerCase() === filters.propertyType.toLowerCase()
+      );
+    }
+
+    // Filter by price range
+    if (filters.priceRange) {
+      filtered = filtered.filter(property => {
+        const price = parseInt(property.price.replace(/[₵,]/g, ''));
+        const [min, max] = filters.priceRange.split('-').map(p => parseInt(p) || Infinity);
+        
+        if (filters.priceRange.includes('+')) {
+          return price >= min;
+        }
+        return price >= min && price <= max;
+      });
+    }
+
+    setFilteredProperties(filtered);
+    setNoResults(filtered.length === 0);
+  };
+
+  const handleViewDetails = (property: typeof allProperties[0]) => {
     setSelectedProperty(property);
     setIsDetailsModalOpen(true);
   };
 
-  const handleContact = (property: typeof properties[0]) => {
+  const handleContact = (property: typeof allProperties[0]) => {
     setSelectedProperty(property);
     setIsContactModalOpen(true);
   };
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-gray-50">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
         <Header />
         
         <div className="pt-20 pb-12">
@@ -109,7 +146,7 @@ const Properties = () => {
             <div className="text-center mb-12 animate-fade-in">
               <h1 className="text-4xl lg:text-5xl font-bold text-black mb-4">
                 Find Your
-                <span className="block bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
+                <span className="block text-[#722f37]">
                   Dream Property
                 </span>
               </h1>
@@ -118,64 +155,17 @@ const Properties = () => {
               </p>
             </div>
 
-            {/* Search and Filters */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 animate-fade-in">
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    <Search className="inline w-4 h-4 mr-1" />
-                    Search Location
-                  </label>
-                  <Input placeholder="Enter city, neighborhood, or address" />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Any Type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="any">Any Type</SelectItem>
-                      <SelectItem value="house">House</SelectItem>
-                      <SelectItem value="condo">Condo</SelectItem>
-                      <SelectItem value="townhouse">Townhouse</SelectItem>
-                      <SelectItem value="villa">Villa</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Any Price" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="any">Any Price</SelectItem>
-                      <SelectItem value="0-500000">Under ₵500K</SelectItem>
-                      <SelectItem value="500000-1000000">₵500K - ₵1M</SelectItem>
-                      <SelectItem value="1000000-2000000">₵1M - ₵2M</SelectItem>
-                      <SelectItem value="2000000+">₵2M+</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 h-10">
-                  <Filter className="w-4 h-4 mr-2" />
-                  Search
-                </Button>
-              </div>
-            </div>
+            {/* Search Component */}
+            <PropertySearch onSearch={handleSearch} />
 
             {/* Results Header */}
             <div className="flex items-center justify-between mb-6 animate-fade-in">
               <div>
                 <h2 className="text-2xl font-bold text-black">Properties for Sale</h2>
-                <p className="text-gray-600">{properties.length} properties found</p>
+                <p className="text-gray-600">{filteredProperties.length} properties found</p>
               </div>
               <Select>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-48 border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
@@ -187,89 +177,53 @@ const Properties = () => {
               </Select>
             </div>
 
-            {/* Properties Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {properties.map((property, index) => (
-                <div
-                  key={property.id}
-                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in"
-                  style={{ animationDelay: `${index * 150}ms` }}
-                >
-                  {/* Property Image */}
-                  <div className="relative h-64 overflow-hidden">
-                    <img
-                      src={property.image}
-                      alt={property.name}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                    />
-                    <div className="absolute top-4 left-4 bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {property.status}
-                    </div>
-                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-gray-900 px-3 py-1 rounded-full text-sm font-medium">
-                      {property.type}
-                    </div>
-                  </div>
-
-                  {/* Property Details */}
-                  <div className="p-6">
-                    <div className="flex items-center text-sm text-gray-600 mb-2">
-                      <MapPin className="w-4 h-4 mr-1" />
-                      {property.location}
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-black mb-4">{property.name}</h3>
-                    
-                    {/* Property Features */}
-                    <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
-                      <div className="flex items-center">
-                        <Bed className="w-4 h-4 mr-1" />
-                        {property.beds} Beds
-                      </div>
-                      <div className="flex items-center">
-                        <Bath className="w-4 h-4 mr-1" />
-                        {property.baths} Baths
-                      </div>
-                      <div className="flex items-center">
-                        <Square className="w-4 h-4 mr-1" />
-                        {property.sqft}
-                      </div>
-                    </div>
-
-                    {/* Price and Actions */}
-                    <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-                      <div className="text-2xl font-bold text-black">{property.price}</div>
-                      <div className="flex space-x-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="border-orange-600 text-orange-600 hover:bg-orange-50 transition-all duration-300"
-                          onClick={() => handleViewDetails(property)}
-                        >
-                          View Details
-                        </Button>
-                        <Button
-                          size="sm"
-                          className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 transition-all duration-300"
-                          onClick={() => handleContact(property)}
-                        >
-                          Contact
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
+            {/* No Results Message */}
+            {noResults && (
+              <div className="text-center py-12 animate-fade-in">
+                <div className="max-w-md mx-auto">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No Properties Found</h3>
+                  <p className="text-gray-600 mb-6">
+                    Sorry, we couldn't meet your request at the moment. Please check back later or explore new options.
+                  </p>
+                  <Button
+                    onClick={() => {
+                      setFilteredProperties(allProperties);
+                      setNoResults(false);
+                    }}
+                    className="wine-gradient hover:wine-gradient-hover"
+                  >
+                    View All Properties
+                  </Button>
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
+
+            {/* Properties Grid */}
+            {!noResults && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredProperties.map((property, index) => (
+                  <PropertyCard
+                    key={property.id}
+                    property={property}
+                    index={index}
+                    onViewDetails={handleViewDetails}
+                    onContact={handleContact}
+                  />
+                ))}
+              </div>
+            )}
 
             {/* Load More */}
-            <div className="text-center mt-12">
-              <Button
-                variant="outline"
-                className="border-orange-600 text-orange-600 hover:bg-orange-50 px-8 py-3 transition-all duration-300"
-              >
-                Load More Properties
-              </Button>
-            </div>
+            {!noResults && filteredProperties.length > 0 && (
+              <div className="text-center mt-12">
+                <Button
+                  variant="outline"
+                  className="border-[#722f37] text-[#722f37] hover:bg-[#722f37] hover:text-white px-8 py-3 transition-all duration-300"
+                >
+                  Load More Properties
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 
