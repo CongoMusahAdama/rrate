@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, Key } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,10 +10,12 @@ import { useToast } from '@/hooks/use-toast';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showSecretKey, setShowSecretKey] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+    secretKey: ''
   });
 
   const { login } = useAuth();
@@ -27,11 +29,28 @@ const Login = () => {
     });
   };
 
+  const isAdminEmail = (email: string) => {
+    return ['admin@realrate1', 'admin@realrate2'].includes(email);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
+      // Check if admin login
+      if (isAdminEmail(formData.email)) {
+        if (formData.secretKey !== 'admin@realrate') {
+          toast({
+            title: "Access Denied",
+            description: "Invalid admin secret key.",
+            variant: "destructive",
+          });
+          setIsLoading(false);
+          return;
+        }
+      }
+
       // Simulate authentication - in real app, this would be an API call
       const mockUser = {
         id: '1',
@@ -49,7 +68,7 @@ const Login = () => {
       });
 
       // Redirect based on user type
-      if (formData.email.includes('admin')) {
+      if (isAdminEmail(formData.email)) {
         navigate('/admin');
       } else {
         navigate('/properties');
@@ -71,7 +90,7 @@ const Login = () => {
       <div 
         className="hidden lg:flex lg:w-1/2 relative"
         style={{
-          backgroundImage: `linear-gradient(rgba(114, 47, 55, 0.3), rgba(114, 47, 55, 0.5)), url('/lovable-uploads/f9ce6cf2-3ff9-43fe-badd-361826278f95.png')`,
+          backgroundImage: `linear-gradient(rgba(90, 30, 36, 0.3), rgba(90, 30, 36, 0.5)), url('/lovable-uploads/f9ce6cf2-3ff9-43fe-badd-361826278f95.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
@@ -93,7 +112,7 @@ const Login = () => {
               <div className="w-12 h-12 wine-gradient rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-xl">R</span>
               </div>
-              <span className="text-2xl font-bold" style={{ color: '#722f37' }}>RealRate</span>
+              <span className="text-2xl font-bold" style={{ color: '#5a1e24' }}>RealRate</span>
             </Link>
             
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
@@ -115,7 +134,7 @@ const Login = () => {
                     type="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="pl-10 border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]"
+                    className="pl-10 border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]"
                     placeholder="Enter your email"
                     required
                   />
@@ -134,7 +153,7 @@ const Login = () => {
                     type={showPassword ? "text" : "password"}
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="pl-10 pr-10 border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]"
+                    className="pl-10 pr-10 border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]"
                     placeholder="Enter your password"
                     required
                   />
@@ -148,20 +167,48 @@ const Login = () => {
                 </div>
               </div>
 
+              {isAdminEmail(formData.email) && (
+                <div>
+                  <Label htmlFor="secretKey" className="block text-sm font-medium text-gray-700 mb-2">
+                    Admin Secret Key
+                  </Label>
+                  <div className="relative">
+                    <Key className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <Input
+                      id="secretKey"
+                      name="secretKey"
+                      type={showSecretKey ? "text" : "password"}
+                      value={formData.secretKey}
+                      onChange={handleInputChange}
+                      className="pl-10 pr-10 border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]"
+                      placeholder="Enter admin secret key"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowSecretKey(!showSecretKey)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    >
+                      {showSecretKey ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 focus:ring-[#722f37]"
-                    style={{ accentColor: '#722f37' }}
+                    className="h-4 w-4 rounded border-gray-300 focus:ring-[#5a1e24]"
+                    style={{ accentColor: '#5a1e24' }}
                   />
                   <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
                     Remember me
                   </label>
                 </div>
-                <Link to="/forgot-password" className="text-sm hover:underline" style={{ color: '#722f37' }}>
+                <Link to="/forgot-password" className="text-sm hover:underline" style={{ color: '#5a1e24' }}>
                   Forgot password?
                 </Link>
               </div>
@@ -178,7 +225,7 @@ const Login = () => {
             <div className="mt-6 text-center">
               <p className="text-gray-600">
                 Don't have an account?{' '}
-                <Link to="/signup" className="font-semibold hover:underline" style={{ color: '#722f37' }}>
+                <Link to="/signup" className="font-semibold hover:underline" style={{ color: '#5a1e24' }}>
                   Sign up here
                 </Link>
               </p>

@@ -105,7 +105,7 @@ const PropertyCard = ({ property, index, onViewDetails, onContact }: PropertyCar
             <Button
               variant="outline"
               size="sm"
-              className="border-[#722f37] text-[#722f37] hover:bg-[#722f37] hover:text-white transition-all duration-300"
+              className="border-[#5a1e24] text-[#5a1e24] hover:bg-[#5a1e24] hover:text-white transition-all duration-300"
               onClick={() => onViewDetails(property)}
             >
               View Details

@@ -31,35 +31,35 @@ const Hero = () => {
     <section 
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(rgba(114, 47, 55, 0.4), rgba(114, 47, 55, 0.6)), url('/lovable-uploads/f9ce6cf2-3ff9-43fe-badd-361826278f95.png')`,
+        backgroundImage: `linear-gradient(rgba(90, 30, 36, 0.1), rgba(90, 30, 36, 0.2)), url('/lovable-uploads/f9ce6cf2-3ff9-43fe-badd-361826278f95.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
       }}
     >
       {/* Background Elements */}
-      <div className="absolute inset-0 bg-black/20"></div>
-      <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-[#722f37] opacity-10 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+      <div className="absolute inset-0 bg-black/10"></div>
+      <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-[#5a1e24] opacity-10 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
       <div className="absolute bottom-1/4 left-1/4 w-72 h-72 bg-white opacity-10 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className={`max-w-xl transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <div className="inline-flex items-center bg-white/90 text-[#722f37] text-sm font-medium px-4 py-2 rounded-full mb-6 animate-fade-in backdrop-blur-sm">
-              <span className="w-2 h-2 bg-[#722f37] rounded-full mr-2 animate-pulse"></span>
+            <div className="inline-flex items-center bg-white/90 text-[#5a1e24] text-sm font-medium px-4 py-2 rounded-full mb-6 animate-fade-in backdrop-blur-sm">
+              <span className="w-2 h-2 bg-[#5a1e24] rounded-full mr-2 animate-pulse"></span>
               AI-Powered Property Valuation for Ghana
             </div>
             
             <h1 className={`text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 transform transition-all duration-1000 delay-300 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} drop-shadow-lg`}>
               Find A House
-              <span className="block text-[#8d4a52]">
+              <span className="block text-[#7a2a30]">
                 That Suits You
               </span>
             </h1>
             
             <p className={`text-xl text-white mb-2 leading-relaxed transform transition-all duration-1000 delay-500 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} drop-shadow-md`}>
-              <span className="font-bold text-[#8d4a52]">Real-time, Real Estate Rates.</span>
+              <span className="font-bold text-[#7a2a30]">Real-time, Real Estate Rates.</span>
             </p>
             
             <p className={`text-lg text-gray-200 mb-8 leading-relaxed transform transition-all duration-1000 delay-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} drop-shadow-md`}>
@@ -75,7 +75,7 @@ const Hero = () => {
               </Link>
               <Link
                 to="/properties"
-                className="inline-flex items-center justify-center bg-white/90 text-[#722f37] px-8 py-4 rounded-xl text-lg font-semibold border-2 border-white/20 hover:bg-white transition-all transform hover:scale-105 shadow-md hover:shadow-lg backdrop-blur-sm"
+                className="inline-flex items-center justify-center bg-white/90 text-[#5a1e24] px-8 py-4 rounded-xl text-lg font-semibold border-2 border-white/20 hover:bg-white transition-all transform hover:scale-105 shadow-md hover:shadow-lg backdrop-blur-sm"
               >
                 Book Now
               </Link>

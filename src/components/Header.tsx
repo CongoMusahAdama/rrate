@@ -34,23 +34,23 @@ const Header = () => {
             <div className="w-8 h-8 wine-gradient rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">R</span>
             </div>
-            <span className={`text-xl font-bold transition-opacity duration-300 ${isScrolled ? 'opacity-0 md:opacity-100' : 'opacity-100'}`} style={{ color: '#722f37' }}>
+            <span className={`text-xl font-bold transition-opacity duration-300 ${isScrolled ? 'opacity-0 md:opacity-100' : 'opacity-100'}`} style={{ color: '#5a1e24' }}>
               RealRate
             </span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className={`hidden md:flex items-center space-x-8 transition-opacity duration-300 ${isScrolled ? 'opacity-0' : 'opacity-100'}`}>
-            <Link to="/" className="text-gray-700 hover:text-[#722f37] transition-colors">
+            <Link to="/" className="text-gray-700 hover:text-[#5a1e24] transition-colors">
               Home
             </Link>
-            <Link to="/predict" className="text-gray-700 hover:text-[#722f37] transition-colors">
+            <Link to="/predict" className="text-gray-700 hover:text-[#5a1e24] transition-colors">
               Predict Price
             </Link>
-            <Link to="/properties" className="text-gray-700 hover:text-[#722f37] transition-colors">
+            <Link to="/properties" className="text-gray-700 hover:text-[#5a1e24] transition-colors">
               Properties
             </Link>
-            <Link to="/about" className="text-gray-700 hover:text-[#722f37] transition-colors">
+            <Link to="/about" className="text-gray-700 hover:text-[#5a1e24] transition-colors">
               About
             </Link>
           </nav>
@@ -66,7 +66,7 @@ const Header = () => {
                   variant="outline"
                   size="sm"
                   onClick={handleLogout}
-                  className="border-[#722f37] text-[#722f37] hover:bg-[#722f37] hover:text-white"
+                  className="border-[#5a1e24] text-[#5a1e24] hover:bg-[#5a1e24] hover:text-white"
                 >
                   <LogOut className="w-4 h-4 mr-2" />
                   Logout
@@ -76,7 +76,7 @@ const Header = () => {
               <div className="flex items-center space-x-2">
                 <Link
                   to="/login"
-                  className="text-[#722f37] hover:underline transition-colors"
+                  className="text-[#5a1e24] hover:underline transition-colors"
                 >
                   Login
                 </Link>
@@ -105,28 +105,28 @@ const Header = () => {
             <div className="flex flex-col space-y-4">
               <Link
                 to="/"
-                className="text-gray-700 hover:text-[#722f37] transition-colors px-4 py-2"
+                className="text-gray-700 hover:text-[#5a1e24] transition-colors px-4 py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
               <Link
                 to="/predict"
-                className="text-gray-700 hover:text-[#722f37] transition-colors px-4 py-2"
+                className="text-gray-700 hover:text-[#5a1e24] transition-colors px-4 py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Predict Price
               </Link>
               <Link
                 to="/properties"
-                className="text-gray-700 hover:text-[#722f37] transition-colors px-4 py-2"
+                className="text-gray-700 hover:text-[#5a1e24] transition-colors px-4 py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Properties
               </Link>
               <Link
                 to="/about"
-                className="text-gray-700 hover:text-[#722f37] transition-colors px-4 py-2"
+                className="text-gray-700 hover:text-[#5a1e24] transition-colors px-4 py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 About
@@ -147,7 +147,7 @@ const Header = () => {
                 <div className="px-4 space-y-2">
                   <Link
                     to="/login"
-                    className="block text-center py-2 text-[#722f37] hover:underline"
+                    className="block text-center py-2 text-[#5a1e24] hover:underline"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Login

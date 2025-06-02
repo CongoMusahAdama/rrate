@@ -146,7 +146,7 @@ const Properties = () => {
             <div className="text-center mb-12 animate-fade-in">
               <h1 className="text-4xl lg:text-5xl font-bold text-black mb-4">
                 Find Your
-                <span className="block text-[#722f37]">
+                <span className="block text-[#5a1e24]">
                   Dream Property
                 </span>
               </h1>
@@ -165,7 +165,7 @@ const Properties = () => {
                 <p className="text-gray-600">{filteredProperties.length} properties found</p>
               </div>
               <Select>
-                <SelectTrigger className="w-48 border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]">
+                <SelectTrigger className="w-48 border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
@@ -218,7 +218,7 @@ const Properties = () => {
               <div className="text-center mt-12">
                 <Button
                   variant="outline"
-                  className="border-[#722f37] text-[#722f37] hover:bg-[#722f37] hover:text-white px-8 py-3 transition-all duration-300"
+                  className="border-[#5a1e24] text-[#5a1e24] hover:bg-[#5a1e24] hover:text-white px-8 py-3 transition-all duration-300"
                 >
                   Load More Properties
                 </Button>

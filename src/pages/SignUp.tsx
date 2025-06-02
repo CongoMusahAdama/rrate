@@ -90,7 +90,7 @@ const SignUp = () => {
       <div 
         className="hidden lg:flex lg:w-1/2 relative"
         style={{
-          backgroundImage: `linear-gradient(rgba(114, 47, 55, 0.3), rgba(114, 47, 55, 0.5)), url('/lovable-uploads/f9ce6cf2-3ff9-43fe-badd-361826278f95.png')`,
+          backgroundImage: `linear-gradient(rgba(90, 30, 36, 0.3), rgba(90, 30, 36, 0.5)), url('/lovable-uploads/f9ce6cf2-3ff9-43fe-badd-361826278f95.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
@@ -112,7 +112,7 @@ const SignUp = () => {
               <div className="w-12 h-12 wine-gradient rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-xl">R</span>
               </div>
-              <span className="text-2xl font-bold" style={{ color: '#722f37' }}>RealRate</span>
+              <span className="text-2xl font-bold" style={{ color: '#5a1e24' }}>RealRate</span>
             </Link>
             
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h2>
@@ -135,7 +135,7 @@ const SignUp = () => {
                       type="text"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="pl-10 border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]"
+                      className="pl-10 border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]"
                       placeholder="First name"
                       required
                     />
@@ -152,7 +152,7 @@ const SignUp = () => {
                     type="text"
                     value={formData.lastName}
                     onChange={handleInputChange}
-                    className="border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]"
+                    className="border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]"
                     placeholder="Last name"
                     required
                   />
@@ -171,7 +171,7 @@ const SignUp = () => {
                     type="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="pl-10 border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]"
+                    className="pl-10 border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]"
                     placeholder="Enter your email"
                     required
                   />
@@ -183,7 +183,7 @@ const SignUp = () => {
                   Account Type
                 </Label>
                 <Select onValueChange={handleUserTypeChange} required>
-                  <SelectTrigger className="border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]">
+                  <SelectTrigger className="border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]">
                     <SelectValue placeholder="Select account type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -205,7 +205,7 @@ const SignUp = () => {
                     type={showPassword ? "text" : "password"}
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="pl-10 pr-10 border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]"
+                    className="pl-10 pr-10 border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]"
                     placeholder="Create password"
                     required
                   />
@@ -231,7 +231,7 @@ const SignUp = () => {
                     type={showConfirmPassword ? "text" : "password"}
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
-                    className="pl-10 pr-10 border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]"
+                    className="pl-10 pr-10 border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]"
                     placeholder="Confirm password"
                     required
                   />
@@ -250,17 +250,17 @@ const SignUp = () => {
                   id="terms"
                   name="terms"
                   type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 focus:ring-[#722f37]"
-                  style={{ accentColor: '#722f37' }}
+                  className="h-4 w-4 rounded border-gray-300 focus:ring-[#5a1e24]"
+                  style={{ accentColor: '#5a1e24' }}
                   required
                 />
                 <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
                   I agree to the{' '}
-                  <Link to="/terms" className="hover:underline" style={{ color: '#722f37' }}>
+                  <Link to="/terms" className="hover:underline" style={{ color: '#5a1e24' }}>
                     Terms of Service
                   </Link>{' '}
                   and{' '}
-                  <Link to="/privacy" className="hover:underline" style={{ color: '#722f37' }}>
+                  <Link to="/privacy" className="hover:underline" style={{ color: '#5a1e24' }}>
                     Privacy Policy
                   </Link>
                 </label>
@@ -278,7 +278,7 @@ const SignUp = () => {
             <div className="mt-6 text-center">
               <p className="text-gray-600">
                 Already have an account?{' '}
-                <Link to="/login" className="font-semibold hover:underline" style={{ color: '#722f37' }}>
+                <Link to="/login" className="font-semibold hover:underline" style={{ color: '#5a1e24' }}>
                   Sign in here
                 </Link>
               </p>
