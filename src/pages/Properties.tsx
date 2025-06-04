@@ -1,13 +1,14 @@
-
 import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PropertyDetailsModal from '@/components/PropertyDetailsModal';
 import ContactModal from '@/components/ContactModal';
+import PaymentModal from '@/components/PaymentModal';
 import PropertySearch, { SearchFilters } from '@/components/PropertySearch';
 import PropertyCard from '@/components/PropertyCard';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { toast } from '@/components/ui/use-toast';
 
 const allProperties = [
   {
@@ -89,7 +90,16 @@ const Properties = () => {
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [noResults, setNoResults] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [propertiesPerPage] = useState(6);
+
+  // Calculate pagination
+  const indexOfLastProperty = currentPage * propertiesPerPage;
+  const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
+  const currentProperties = filteredProperties.slice(indexOfFirstProperty, indexOfLastProperty);
+  const totalPages = Math.ceil(filteredProperties.length / propertiesPerPage);
 
   const handleSearch = (filters: SearchFilters) => {
     let filtered = allProperties;
@@ -124,6 +134,7 @@ const Properties = () => {
 
     setFilteredProperties(filtered);
     setNoResults(filtered.length === 0);
+    setCurrentPage(1); // Reset to first page after search
   };
 
   const handleViewDetails = (property: typeof allProperties[0]) => {
@@ -136,8 +147,28 @@ const Properties = () => {
     setIsContactModalOpen(true);
   };
 
+  const handleBook = (property: typeof allProperties[0]) => {
+    setSelectedProperty(property);
+    setIsPaymentModalOpen(true);
+  };
+
+  const handlePaymentSuccess = () => {
+    toast({
+      title: "Booking Confirmed!",
+      description: "Your payment was successful and your booking has been confirmed.",
+    });
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <>
+      {/* Add Paystack script */}
+      <script src="https://js.paystack.co/v1/inline.js"></script>
+      
       <div className="min-h-screen bg-white">
         <Header />
         
@@ -147,7 +178,7 @@ const Properties = () => {
             <div className="text-center mb-12 animate-fade-in">
               <h1 className="text-4xl lg:text-5xl font-bold text-black mb-4">
                 Find Your
-                <span className="block text-blue-500">
+                <span className="block text-[#0ea5e9]">
                   Dream Property
                 </span>
               </h1>
@@ -166,7 +197,7 @@ const Properties = () => {
                 <p className="text-gray-600">{filteredProperties.length} properties found</p>
               </div>
               <Select>
-                <SelectTrigger className="w-48 border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-white">
+                <SelectTrigger className="w-48 border-gray-300 focus:border-[#0ea5e9] focus:ring-[#0ea5e9] bg-white">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border border-gray-200">
@@ -191,7 +222,7 @@ const Properties = () => {
                       setFilteredProperties(allProperties);
                       setNoResults(false);
                     }}
-                    className="blue-gradient hover:blue-gradient-hover text-white"
+                    className="brand-button"
                   >
                     View All Properties
                   </Button>
@@ -202,26 +233,49 @@ const Properties = () => {
             {/* Properties Grid */}
             {!noResults && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProperties.map((property, index) => (
+                {currentProperties.map((property, index) => (
                   <PropertyCard
                     key={property.id}
                     property={property}
                     index={index}
                     onViewDetails={handleViewDetails}
                     onContact={handleContact}
+                    onBook={handleBook}
                   />
                 ))}
               </div>
             )}
 
-            {/* Load More */}
-            {!noResults && filteredProperties.length > 0 && (
-              <div className="text-center mt-12">
+            {/* Pagination */}
+            {!noResults && totalPages > 1 && (
+              <div className="flex justify-center items-center mt-12 space-x-2">
                 <Button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
                   variant="outline"
-                  className="border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-8 py-3 transition-all duration-300"
+                  className="border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
                 >
-                  Load More Properties
+                  Previous
+                </Button>
+                
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <Button
+                    key={i + 1}
+                    onClick={() => handlePageChange(i + 1)}
+                    variant={currentPage === i + 1 ? "default" : "outline"}
+                    className={currentPage === i + 1 ? "brand-button" : "border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"}
+                  >
+                    {i + 1}
+                  </Button>
+                ))}
+                
+                <Button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  variant="outline"
+                  className="border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
+                >
+                  Next
                 </Button>
               </div>
             )}
@@ -241,6 +295,13 @@ const Properties = () => {
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
         property={selectedProperty}
+      />
+
+      <PaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        property={selectedProperty}
+        onPaymentSuccess={handlePaymentSuccess}
       />
     </>
   );

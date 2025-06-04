@@ -18,9 +18,10 @@ interface PropertyCardProps {
   index: number;
   onViewDetails: (property: any) => void;
   onContact: (property: any) => void;
+  onBook?: (property: any) => void;
 }
 
-const PropertyCard = ({ property, index, onViewDetails, onContact }: PropertyCardProps) => {
+const PropertyCard = ({ property, index, onViewDetails, onContact, onBook }: PropertyCardProps) => {
   return (
     <div 
       className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-200"
@@ -33,7 +34,7 @@ const PropertyCard = ({ property, index, onViewDetails, onContact }: PropertyCar
           className="w-full h-64 object-cover"
         />
         <div className="absolute top-4 left-4">
-          <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+          <span className="bg-[#0ea5e9] text-white px-3 py-1 rounded-full text-sm font-medium">
             {property.status}
           </span>
         </div>
@@ -68,28 +69,38 @@ const PropertyCard = ({ property, index, onViewDetails, onContact }: PropertyCar
           </div>
         </div>
         
-        <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold text-blue-500">
+        <div className="flex items-center justify-between mb-4">
+          <div className="text-2xl font-bold text-[#0ea5e9]">
             {property.price}
           </div>
         </div>
         
-        <div className="flex space-x-2 mt-4">
+        <div className="flex space-x-2">
           <Button
             onClick={() => onViewDetails(property)}
             variant="outline"
-            className="flex-1 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
+            className="flex-1 border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
           >
             <Eye className="w-4 h-4 mr-2" />
             View Details
           </Button>
-          <Button
-            onClick={() => onContact(property)}
-            className="flex-1 blue-gradient hover:blue-gradient-hover text-white"
-          >
-            <MessageCircle className="w-4 h-4 mr-2" />
-            Contact
-          </Button>
+          {onBook ? (
+            <Button
+              onClick={() => onBook(property)}
+              className="flex-1 brand-button"
+            >
+              <MessageCircle className="w-4 h-4 mr-2" />
+              Book Now
+            </Button>
+          ) : (
+            <Button
+              onClick={() => onContact(property)}
+              className="flex-1 brand-button"
+            >
+              <MessageCircle className="w-4 h-4 mr-2" />
+              Contact
+            </Button>
+          )}
         </div>
       </div>
     </div>

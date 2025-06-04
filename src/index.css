@@ -44,9 +44,9 @@
     --sidebar-border: 0 0% 89%;
     --sidebar-ring: 210 100% 50%;
 
-    --blue-primary: #0ea5e9;
-    --blue-light: #38bdf8;
-    --blue-dark: #0284c7;
+    --brand-blue: #0ea5e9;
+    --brand-blue-light: #38bdf8;
+    --brand-blue-dark: #0284c7;
   }
 
   .dark {
@@ -91,11 +91,19 @@
 }
 
 @layer utilities {
-  .blue-gradient {
+  .brand-blue-gradient {
     background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
   }
   
-  .blue-gradient-hover {
+  .brand-blue-gradient-hover {
     background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+  }
+  
+  .brand-button {
+    @apply bg-[#0ea5e9] hover:bg-[#0284c7] text-white;
+  }
+  
+  .hero-overlay {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4));
   }
 }

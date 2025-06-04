@@ -41,12 +41,12 @@ const About = () => {
       
       <div className="pt-20 pb-12">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-orange-50 via-white to-gray-50">
+        <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h1 className="text-4xl lg:text-5xl font-bold text-black mb-6">
                 About
-                <span className="block bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-[#0ea5e9] to-[#38bdf8] bg-clip-text text-transparent">
                   RealRate
                 </span>
               </h1>
@@ -73,13 +73,13 @@ const About = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
-                <div className="inline-flex items-center bg-orange-100 text-orange-800 text-sm font-medium px-4 py-2 rounded-full mb-6">
+                <div className="inline-flex items-center bg-blue-100 text-[#0ea5e9] text-sm font-medium px-4 py-2 rounded-full mb-6">
                   <Target className="w-4 h-4 mr-2" />
                   Our Mission
                 </div>
                 <h2 className="text-3xl lg:text-4xl font-bold text-black mb-6">
                   Making Real Estate in Ghana
-                  <span className="text-orange-600"> Transparent & Accessible</span>
+                  <span className="text-[#0ea5e9]"> Transparent & Accessible</span>
                 </h2>
                 <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                   We believe every Ghanaian deserves access to accurate, unbiased property information. 
@@ -101,7 +101,7 @@ const About = () => {
                 </div>
                 <div className="absolute -bottom-6 -left-6 bg-white rounded-xl p-6 shadow-xl">
                   <div className="flex items-center">
-                    <Award className="w-8 h-8 text-orange-600 mr-3" />
+                    <Award className="w-8 h-8 text-[#0ea5e9] mr-3" />
                     <div>
                       <div className="font-bold text-black">Ghana Leader</div>
                       <div className="text-sm text-gray-600">AI Real Estate Tech</div>
@@ -129,7 +129,7 @@ const About = () => {
               {features.map((feature, index) => (
                 <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow">
                   <CardContent className="p-8">
-                    <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-r from-[#0ea5e9] to-[#38bdf8] rounded-lg flex items-center justify-center mb-6">
                       <feature.icon className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-xl font-bold text-black mb-4">{feature.title}</h3>
@@ -142,24 +142,24 @@ const About = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+        <section className="py-20 bg-gradient-to-r from-[#0ea5e9] to-[#38bdf8] text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
               Ready to Experience the Future of Real Estate in Ghana?
             </h2>
-            <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
               Join thousands of Ghanaians who trust our AI-powered platform for accurate property valuations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/predict"
-                className="inline-flex items-center justify-center bg-white text-orange-600 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-gray-50 transition-colors"
+                className="inline-flex items-center justify-center bg-white text-[#0ea5e9] px-8 py-4 rounded-xl text-lg font-semibold hover:bg-gray-50 transition-colors"
               >
                 Get Price Estimate
               </a>
               <a
                 href="/properties"
-                className="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white hover:text-orange-600 transition-colors"
+                className="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white hover:text-[#0ea5e9] transition-colors"
               >
                 Browse Properties
               </a>

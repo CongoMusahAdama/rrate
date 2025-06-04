@@ -81,14 +81,14 @@ const PopularProperties = () => {
           <div className="flex items-center justify-between mb-12">
             <div>
               <div className="flex items-center text-sm font-medium text-gray-600 mb-2">
-                <div className="w-12 h-px bg-orange-400 mr-4"></div>
+                <div className="w-12 h-px bg-[#0ea5e9] mr-4"></div>
                 POPULAR
               </div>
               <h2 className="text-4xl font-bold text-black">Our Popular Homes in Ghana</h2>
             </div>
             <Button
               variant="ghost"
-              className="hidden md:flex items-center text-orange-600 hover:text-orange-700"
+              className="hidden md:flex items-center text-[#0ea5e9] hover:text-[#0284c7]"
             >
               Explore All
               <ArrowRight className="ml-2 w-4 h-4" />
@@ -142,7 +142,7 @@ const PopularProperties = () => {
                     <div className="text-2xl font-bold text-black">{formatPrice(property)}</div>
                     <Button
                       size="sm"
-                      className="bg-orange-500 hover:bg-orange-600 text-white px-6"
+                      className="brand-button px-6"
                       onClick={() => handleBookNow(property)}
                     >
                       Book Now
@@ -157,7 +157,7 @@ const PopularProperties = () => {
           <div className="md:hidden text-center mt-8">
             <Button
               variant="outline"
-              className="border-orange-600 text-orange-600 hover:bg-orange-50"
+              className="border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
             >
               Explore All
               <ArrowRight className="ml-2 w-4 h-4" />
