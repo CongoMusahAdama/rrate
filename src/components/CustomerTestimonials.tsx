@@ -1,6 +1,4 @@
 
-import { Star } from 'lucide-react';
-
 const CustomerTestimonials = () => {
   const testimonials = [
     {
@@ -8,7 +6,6 @@ const CustomerTestimonials = () => {
       name: 'Sarah Mensah',
       role: 'Property Buyer',
       image: '/lovable-uploads/1961377a-f170-4b38-a356-d3ec9c96174c.png',
-      rating: 5,
       content: 'RealRate helped me find the perfect home in Accra. The AI price prediction was spot-on, and I saved thousands on my purchase!'
     },
     {
@@ -16,7 +13,6 @@ const CustomerTestimonials = () => {
       name: 'Kwame Asante',
       role: 'Real Estate Investor',
       image: '/lovable-uploads/56ab0d76-187c-4e43-8987-72ec33523c4d.png',
-      rating: 5,
       content: 'As an investor, accurate property valuations are crucial. RealRate AI predictions have been incredibly reliable for my portfolio decisions.'
     },
     {
@@ -24,7 +20,6 @@ const CustomerTestimonials = () => {
       name: 'Akosua Osei',
       role: 'First-time Buyer',
       image: '/lovable-uploads/6b288a42-15bd-4c5d-a7cf-238470f6e2c9.png',
-      rating: 5,
       content: 'Being a first-time buyer was overwhelming, but RealRate made the process so much easier. I knew exactly what to expect price-wise!'
     }
   ];
@@ -48,17 +43,6 @@ const CustomerTestimonials = () => {
               className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in"
               style={{ animationDelay: `${index * 200}ms` }}
             >
-              {/* Rating */}
-              <div className="flex items-center mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-5 h-5 fill-current"
-                    style={{ color: '#722f37' }}
-                  />
-                ))}
-              </div>
-
               {/* Content */}
               <p className="text-gray-700 mb-6 leading-relaxed">
                 {testimonial.content}

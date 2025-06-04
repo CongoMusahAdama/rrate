@@ -1,6 +1,8 @@
 
-import { Bed, Bath, Square, MapPin, Eye, MessageCircle } from 'lucide-react';
+import { Bed, Bath, Square, MapPin, Eye, MessageCircle, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useCart } from '@/contexts/CartContext';
+import { toast } from '@/components/ui/use-toast';
 
 interface PropertyCardProps {
   property: {
@@ -22,6 +24,20 @@ interface PropertyCardProps {
 }
 
 const PropertyCard = ({ property, index, onViewDetails, onContact, onBook }: PropertyCardProps) => {
+  const { addToCart, cartItems } = useCart();
+  
+  const isInCart = cartItems.some(item => item.id === property.id);
+
+  const handleAddToCart = () => {
+    if (!isInCart) {
+      addToCart(property);
+      toast({
+        title: "Added to Cart",
+        description: `${property.name} has been added to your cart.`,
+      });
+    }
+  };
+
   return (
     <div 
       className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-200"
@@ -75,19 +91,31 @@ const PropertyCard = ({ property, index, onViewDetails, onContact, onBook }: Pro
           </div>
         </div>
         
-        <div className="flex space-x-2">
+        <div className="grid grid-cols-2 gap-2 mb-3">
           <Button
             onClick={() => onViewDetails(property)}
             variant="outline"
-            className="flex-1 border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
+            className="border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
           >
             <Eye className="w-4 h-4 mr-2" />
-            View Details
+            View
           </Button>
+          <Button
+            onClick={handleAddToCart}
+            disabled={isInCart}
+            variant="outline"
+            className={isInCart ? "bg-gray-100 text-gray-500" : "border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"}
+          >
+            <ShoppingCart className="w-4 h-4 mr-2" />
+            {isInCart ? 'In Cart' : 'Add to Cart'}
+          </Button>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-2">
           {onBook ? (
             <Button
               onClick={() => onBook(property)}
-              className="flex-1 brand-button"
+              className="bg-[#0ea5e9] hover:bg-[#0284c7] text-white"
             >
               <MessageCircle className="w-4 h-4 mr-2" />
               Book Now
@@ -95,7 +123,7 @@ const PropertyCard = ({ property, index, onViewDetails, onContact, onBook }: Pro
           ) : (
             <Button
               onClick={() => onContact(property)}
-              className="flex-1 brand-button"
+              className="bg-[#0ea5e9] hover:bg-[#0284c7] text-white"
             >
               <MessageCircle className="w-4 h-4 mr-2" />
               Contact

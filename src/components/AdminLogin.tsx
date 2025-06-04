@@ -13,7 +13,7 @@ const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: ''
   });
 
@@ -33,19 +33,18 @@ const AdminLogin = () => {
     setIsLoading(true);
 
     try {
-      // Validate admin credentials
-      if ((formData.username === 'admin@realrate1' || formData.username === 'admin@realrate2') && 
-          formData.password === 'admin@realrate') {
+      // Updated admin credentials
+      if (formData.email === 'admin@realrate123' && formData.password === 'realrate123') {
         
         const adminUser = {
           id: 'admin-1',
-          email: formData.username,
+          email: formData.email,
           firstName: 'Admin',
           lastName: 'User',
           userType: 'estate-advertiser' as const
         };
 
-        login(formData.username, formData.password, adminUser);
+        login(formData.email, formData.password, adminUser);
         
         toast({
           title: "Admin login successful",
@@ -75,7 +74,7 @@ const AdminLogin = () => {
     <div className="min-h-screen bg-white flex items-center justify-center px-4">
       <Card className="w-full max-w-md shadow-xl border border-gray-200">
         <CardHeader className="text-center">
-          <div className="w-16 h-16 orange-gradient rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-[#0ea5e9] rounded-full flex items-center justify-center mx-auto mb-4">
             <Shield className="w-8 h-8 text-white" />
           </div>
           <CardTitle className="text-2xl font-bold text-black">Admin Access</CardTitle>
@@ -86,19 +85,19 @@ const AdminLogin = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <Label htmlFor="username" className="block text-sm font-medium text-black mb-2">
-                Admin Username
+              <Label htmlFor="email" className="block text-sm font-medium text-black mb-2">
+                Admin Email
               </Label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <Input
-                  id="username"
-                  name="username"
-                  type="text"
-                  value={formData.username}
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
                   onChange={handleInputChange}
-                  className="pl-10 border-gray-300 focus:border-orange-500 focus:ring-orange-500"
-                  placeholder="Enter admin username"
+                  className="pl-10 border-gray-300 focus:border-[#0ea5e9] focus:ring-[#0ea5e9]"
+                  placeholder="admin@realrate123"
                   required
                 />
               </div>
@@ -116,7 +115,7 @@ const AdminLogin = () => {
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="pl-10 pr-10 border-gray-300 focus:border-orange-500 focus:ring-orange-500"
+                  className="pl-10 pr-10 border-gray-300 focus:border-[#0ea5e9] focus:ring-[#0ea5e9]"
                   placeholder="Enter admin password"
                   required
                 />
@@ -133,7 +132,7 @@ const AdminLogin = () => {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full orange-gradient hover:orange-gradient-hover text-white font-semibold py-3 rounded-xl transition-all"
+              className="w-full bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-semibold py-3 rounded-xl transition-all"
             >
               {isLoading ? 'Authenticating...' : 'Access Admin Dashboard'}
             </Button>
