@@ -50,14 +50,14 @@ const PropertySearch = ({ onSearch }: PropertySearchProps) => {
             placeholder="Enter city, neighborhood, or address" 
             value={filters.location}
             onChange={handleLocationChange}
-            className="border-gray-300 focus:border-orange-500 focus:ring-orange-500"
+            className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
         
         <div>
           <label className="block text-sm font-medium text-black mb-2">Property Type</label>
           <Select onValueChange={handlePropertyTypeChange} value={filters.propertyType || 'all'}>
-            <SelectTrigger className="border-gray-300 focus:border-orange-500 focus:ring-orange-500 bg-white">
+            <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-white">
               <SelectValue placeholder="Any Type" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200">
@@ -75,7 +75,7 @@ const PropertySearch = ({ onSearch }: PropertySearchProps) => {
         <div>
           <label className="block text-sm font-medium text-black mb-2">Price Range</label>
           <Select onValueChange={handlePriceRangeChange} value={filters.priceRange || 'all'}>
-            <SelectTrigger className="border-gray-300 focus:border-orange-500 focus:ring-orange-500 bg-white">
+            <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-white">
               <SelectValue placeholder="Any Price" />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200">
@@ -90,7 +90,7 @@ const PropertySearch = ({ onSearch }: PropertySearchProps) => {
         
         <Button 
           onClick={handleSearch}
-          className="orange-gradient hover:orange-gradient-hover h-10 text-white"
+          className="blue-gradient hover:blue-gradient-hover h-10 text-white"
         >
           <Filter className="w-4 h-4 mr-2" />
           Search

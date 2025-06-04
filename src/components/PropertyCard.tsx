@@ -33,7 +33,7 @@ const PropertyCard = ({ property, index, onViewDetails, onContact }: PropertyCar
           className="w-full h-64 object-cover"
         />
         <div className="absolute top-4 left-4">
-          <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+          <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
             {property.status}
           </span>
         </div>
@@ -69,7 +69,7 @@ const PropertyCard = ({ property, index, onViewDetails, onContact }: PropertyCar
         </div>
         
         <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold text-orange-500">
+          <div className="text-2xl font-bold text-blue-500">
             {property.price}
           </div>
         </div>
@@ -78,14 +78,14 @@ const PropertyCard = ({ property, index, onViewDetails, onContact }: PropertyCar
           <Button
             onClick={() => onViewDetails(property)}
             variant="outline"
-            className="flex-1 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white"
+            className="flex-1 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
           >
             <Eye className="w-4 h-4 mr-2" />
             View Details
           </Button>
           <Button
             onClick={() => onContact(property)}
-            className="flex-1 orange-gradient hover:orange-gradient-hover text-white"
+            className="flex-1 blue-gradient hover:blue-gradient-hover text-white"
           >
             <MessageCircle className="w-4 h-4 mr-2" />
             Contact

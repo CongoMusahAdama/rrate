@@ -71,13 +71,13 @@ const PredictPrice = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page Header */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center bg-orange-100 text-orange-800 text-sm font-medium px-4 py-2 rounded-full mb-6">
+            <div className="inline-flex items-center bg-blue-100 text-blue-800 text-sm font-medium px-4 py-2 rounded-full mb-6">
               <Calculator className="w-4 h-4 mr-2" />
               AI Price Prediction
             </div>
             <h1 className="text-4xl lg:text-5xl font-bold text-black mb-4">
               Get Your Property
-              <span className="block bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-blue-500 to-blue-600 bg-clip-text text-transparent">
                 Price Estimate
               </span>
             </h1>
@@ -91,7 +91,7 @@ const PredictPrice = () => {
             <Card className="shadow-xl border border-gray-200 bg-white">
               <CardHeader>
                 <CardTitle className="flex items-center text-2xl text-black">
-                  <Home className="w-6 h-6 mr-2 text-orange-500" />
+                  <Home className="w-6 h-6 mr-2 text-blue-500" />
                   Property Details
                 </CardTitle>
                 <CardDescription className="text-gray-600">
@@ -110,7 +110,7 @@ const PredictPrice = () => {
                     placeholder="Enter city, state, or ZIP code"
                     value={formData.location}
                     onChange={(e) => handleInputChange('location', e.target.value)}
-                    className="border-gray-300 focus:border-orange-500 focus:ring-orange-500"
+                    className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>
 
@@ -118,7 +118,7 @@ const PredictPrice = () => {
                 <div className="space-y-2">
                   <Label className="text-black">Property Type</Label>
                   <Select value={formData.propertyType} onValueChange={(value) => handleInputChange('propertyType', value)}>
-                    <SelectTrigger className="border-gray-300 focus:border-orange-500 focus:ring-orange-500">
+                    <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                       <SelectValue placeholder="Select property type" />
                     </SelectTrigger>
                     <SelectContent className="bg-white border border-gray-200">
@@ -137,7 +137,7 @@ const PredictPrice = () => {
                   <div className="space-y-2">
                     <Label className="text-black">Bedrooms</Label>
                     <Select value={formData.bedrooms} onValueChange={(value) => handleInputChange('bedrooms', value)}>
-                      <SelectTrigger className="border-gray-300 focus:border-orange-500 focus:ring-orange-500">
+                      <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                         <SelectValue placeholder="Bedrooms" />
                       </SelectTrigger>
                       <SelectContent className="bg-white border border-gray-200">
@@ -150,7 +150,7 @@ const PredictPrice = () => {
                   <div className="space-y-2">
                     <Label className="text-black">Bathrooms</Label>
                     <Select value={formData.bathrooms} onValueChange={(value) => handleInputChange('bathrooms', value)}>
-                      <SelectTrigger className="border-gray-300 focus:border-orange-500 focus:ring-orange-500">
+                      <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                         <SelectValue placeholder="Bathrooms" />
                       </SelectTrigger>
                       <SelectContent className="bg-white border border-gray-200">
@@ -171,7 +171,7 @@ const PredictPrice = () => {
                     placeholder="e.g., 2500"
                     value={formData.squareFootage}
                     onChange={(e) => handleInputChange('squareFootage', e.target.value)}
-                    className="border-gray-300 focus:border-orange-500 focus:ring-orange-500"
+                    className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>
 
@@ -185,7 +185,7 @@ const PredictPrice = () => {
                       placeholder="e.g., 2010"
                       value={formData.yearBuilt}
                       onChange={(e) => handleInputChange('yearBuilt', e.target.value)}
-                      className="border-gray-300 focus:border-orange-500 focus:ring-orange-500"
+                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                     />
                   </div>
                   <div className="space-y-2">
@@ -196,7 +196,7 @@ const PredictPrice = () => {
                       placeholder="e.g., 8000"
                       value={formData.lotSize}
                       onChange={(e) => handleInputChange('lotSize', e.target.value)}
-                      className="border-gray-300 focus:border-orange-500 focus:ring-orange-500"
+                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                     />
                   </div>
                 </div>
@@ -205,7 +205,7 @@ const PredictPrice = () => {
                 <Button
                   onClick={handlePredict}
                   disabled={isLoading || !formData.location || !formData.propertyType}
-                  className="w-full orange-gradient hover:orange-gradient-hover h-12 text-lg font-semibold text-white"
+                  className="w-full blue-gradient hover:blue-gradient-hover h-12 text-lg font-semibold text-white"
                 >
                   {isLoading ? (
                     <div className="flex items-center">
@@ -227,7 +227,7 @@ const PredictPrice = () => {
               {prediction ? (
                 <>
                   {/* Main Price Card */}
-                  <Card className="shadow-xl border-0 orange-gradient text-white">
+                  <Card className="shadow-xl border-0 blue-gradient text-white">
                     <CardHeader>
                       <CardTitle className="flex items-center text-2xl">
                         <DollarSign className="w-6 h-6 mr-2" />
@@ -238,18 +238,18 @@ const PredictPrice = () => {
                       <div className="text-5xl font-bold mb-2">
                         {formatPrice(prediction.estimatedPrice)}
                       </div>
-                      <div className="text-orange-100 mb-4">
+                      <div className="text-blue-100 mb-4">
                         Range: {formatPrice(prediction.priceRange.min)} - {formatPrice(prediction.priceRange.max)}
                       </div>
                       <div className="flex items-center justify-between bg-white/20 rounded-lg p-4">
                         <div>
-                          <div className="text-sm text-orange-100">Model Accuracy</div>
+                          <div className="text-sm text-blue-100">Model Accuracy</div>
                           <div className="text-2xl font-bold">{prediction.accuracy}%</div>
                         </div>
                         <div className="flex items-center">
                           <TrendingUp className={`w-6 h-6 mr-2 ${prediction.marketTrend === 'up' ? 'text-green-300' : 'text-red-300'}`} />
                           <div>
-                            <div className="text-sm text-orange-100">Market Trend</div>
+                            <div className="text-sm text-blue-100">Market Trend</div>
                             <div className="text-lg font-semibold">
                               {prediction.marketTrend === 'up' ? '+' : '-'}{prediction.trendPercentage}%
                             </div>
@@ -276,8 +276,8 @@ const PredictPrice = () => {
                     <Card className="shadow-lg bg-white border border-gray-200">
                       <CardContent className="p-6">
                         <div className="text-center">
-                          <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <Calculator className="w-6 h-6 text-orange-600" />
+                          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <Calculator className="w-6 h-6 text-blue-600" />
                           </div>
                           <div className="text-sm text-gray-600 mb-1">Price per Sq Ft</div>
                           <div className="text-xl font-bold text-black">
@@ -291,8 +291,8 @@ const PredictPrice = () => {
               ) : (
                 <Card className="shadow-xl border-2 border-dashed border-gray-300 bg-white">
                   <CardContent className="p-12 text-center">
-                    <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Calculator className="w-8 h-8 text-orange-600" />
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Calculator className="w-8 h-8 text-blue-600" />
                     </div>
                     <h3 className="text-xl font-semibold text-black mb-2">Ready to Predict</h3>
                     <p className="text-gray-600">
