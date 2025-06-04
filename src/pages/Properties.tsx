@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -137,7 +138,7 @@ const Properties = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <div className="min-h-screen bg-white">
         <Header />
         
         <div className="pt-20 pb-12">
@@ -146,7 +147,7 @@ const Properties = () => {
             <div className="text-center mb-12 animate-fade-in">
               <h1 className="text-4xl lg:text-5xl font-bold text-black mb-4">
                 Find Your
-                <span className="block text-[#5a1e24]">
+                <span className="block text-orange-500">
                   Dream Property
                 </span>
               </h1>
@@ -165,10 +166,10 @@ const Properties = () => {
                 <p className="text-gray-600">{filteredProperties.length} properties found</p>
               </div>
               <Select>
-                <SelectTrigger className="w-48 border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]">
+                <SelectTrigger className="w-48 border-gray-300 focus:border-orange-500 focus:ring-orange-500 bg-white">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white border border-gray-200">
                   <SelectItem value="price-low">Price: Low to High</SelectItem>
                   <SelectItem value="price-high">Price: High to Low</SelectItem>
                   <SelectItem value="newest">Newest First</SelectItem>
@@ -181,7 +182,7 @@ const Properties = () => {
             {noResults && (
               <div className="text-center py-12 animate-fade-in">
                 <div className="max-w-md mx-auto">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No Properties Found</h3>
+                  <h3 className="text-xl font-semibold text-black mb-2">No Properties Found</h3>
                   <p className="text-gray-600 mb-6">
                     Sorry, we couldn't meet your request at the moment. Please check back later or explore new options.
                   </p>
@@ -190,7 +191,7 @@ const Properties = () => {
                       setFilteredProperties(allProperties);
                       setNoResults(false);
                     }}
-                    className="wine-gradient hover:wine-gradient-hover"
+                    className="orange-gradient hover:orange-gradient-hover text-white"
                   >
                     View All Properties
                   </Button>
@@ -218,7 +219,7 @@ const Properties = () => {
               <div className="text-center mt-12">
                 <Button
                   variant="outline"
-                  className="border-[#5a1e24] text-[#5a1e24] hover:bg-[#5a1e24] hover:text-white px-8 py-3 transition-all duration-300"
+                  className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-8 py-3 transition-all duration-300"
                 >
                   Load More Properties
                 </Button>

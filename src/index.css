@@ -6,77 +6,77 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 345 65% 13%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 24 100% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 345 25% 95%;
-    --secondary-foreground: 345 65% 10%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 345 35% 85%;
-    --accent-foreground: 345 65% 10%;
+    --accent: 24 100% 50%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 345 65% 13%;
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --ring: 24 100% 50%;
 
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 345 65% 13%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 345 25% 95%;
-    --sidebar-accent-foreground: 345 65% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 345 65% 13%;
+    --sidebar-foreground: 0 0% 9%;
+    --sidebar-primary: 24 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 89%;
+    --sidebar-ring: 24 100% 50%;
 
-    --wine-primary: #5a1e24;
-    --wine-light: #7a2a30;
-    --wine-dark: #3d1419;
+    --orange-primary: #ff6b35;
+    --orange-light: #ff8c69;
+    --orange-dark: #e55a2b;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 345 65% 13%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 345 25% 20%;
-    --secondary-foreground: 345 25% 95%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 345 25% 25%;
-    --accent-foreground: 345 25% 95%;
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 24 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 24 100% 50%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 345 65% 13%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 345 65% 25%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 24 100% 50%;
+    --sidebar-background: 0 0% 2%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 24 100% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 345 65% 25%;
+    --sidebar-accent: 0 0% 14.9%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 14.9%;
+    --sidebar-ring: 24 100% 50%;
   }
 }
 
@@ -91,11 +91,11 @@
 }
 
 @layer utilities {
-  .wine-gradient {
-    background: linear-gradient(135deg, #5a1e24 0%, #7a2a30 100%);
+  .orange-gradient {
+    background: linear-gradient(135deg, #ff6b35 0%, #ff8c69 100%);
   }
   
-  .wine-gradient-hover {
-    background: linear-gradient(135deg, #3d1419 0%, #5a1e24 100%);
+  .orange-gradient-hover {
+    background: linear-gradient(135deg, #e55a2b 0%, #ff6b35 100%);
   }
 }

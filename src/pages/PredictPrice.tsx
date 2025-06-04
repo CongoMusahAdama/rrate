@@ -64,7 +64,7 @@ const PredictPrice = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-gray-50">
+    <div className="min-h-screen bg-white">
       <Header />
       
       <div className="pt-20 pb-12">
@@ -88,20 +88,20 @@ const PredictPrice = () => {
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Input Form */}
-            <Card className="shadow-xl border-0">
+            <Card className="shadow-xl border border-gray-200 bg-white">
               <CardHeader>
                 <CardTitle className="flex items-center text-2xl text-black">
-                  <Home className="w-6 h-6 mr-2 text-orange-600" />
+                  <Home className="w-6 h-6 mr-2 text-orange-500" />
                   Property Details
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-gray-600">
                   Provide accurate information for the best price estimate
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Location */}
                 <div className="space-y-2">
-                  <Label htmlFor="location" className="flex items-center">
+                  <Label htmlFor="location" className="flex items-center text-black">
                     <MapPin className="w-4 h-4 mr-1" />
                     Location
                   </Label>
@@ -110,17 +110,18 @@ const PredictPrice = () => {
                     placeholder="Enter city, state, or ZIP code"
                     value={formData.location}
                     onChange={(e) => handleInputChange('location', e.target.value)}
+                    className="border-gray-300 focus:border-orange-500 focus:ring-orange-500"
                   />
                 </div>
 
                 {/* Property Type */}
                 <div className="space-y-2">
-                  <Label>Property Type</Label>
+                  <Label className="text-black">Property Type</Label>
                   <Select value={formData.propertyType} onValueChange={(value) => handleInputChange('propertyType', value)}>
-                    <SelectTrigger>
+                    <SelectTrigger className="border-gray-300 focus:border-orange-500 focus:ring-orange-500">
                       <SelectValue placeholder="Select property type" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white border border-gray-200">
                       <SelectItem value="single-family">Single Family Home</SelectItem>
                       <SelectItem value="condo">Condominium</SelectItem>
                       <SelectItem value="townhouse">Townhouse</SelectItem>
@@ -134,12 +135,12 @@ const PredictPrice = () => {
                 {/* Bedrooms and Bathrooms */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Bedrooms</Label>
+                    <Label className="text-black">Bedrooms</Label>
                     <Select value={formData.bedrooms} onValueChange={(value) => handleInputChange('bedrooms', value)}>
-                      <SelectTrigger>
+                      <SelectTrigger className="border-gray-300 focus:border-orange-500 focus:ring-orange-500">
                         <SelectValue placeholder="Bedrooms" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-white border border-gray-200">
                         {[1, 2, 3, 4, 5, 6].map(num => (
                           <SelectItem key={num} value={num.toString()}>{num}+ bed{num > 1 ? 's' : ''}</SelectItem>
                         ))}
@@ -147,12 +148,12 @@ const PredictPrice = () => {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label>Bathrooms</Label>
+                    <Label className="text-black">Bathrooms</Label>
                     <Select value={formData.bathrooms} onValueChange={(value) => handleInputChange('bathrooms', value)}>
-                      <SelectTrigger>
+                      <SelectTrigger className="border-gray-300 focus:border-orange-500 focus:ring-orange-500">
                         <SelectValue placeholder="Bathrooms" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-white border border-gray-200">
                         {[1, 1.5, 2, 2.5, 3, 3.5, 4, 5].map(num => (
                           <SelectItem key={num} value={num.toString()}>{num}+ bath{num > 1 ? 's' : ''}</SelectItem>
                         ))}
@@ -163,36 +164,39 @@ const PredictPrice = () => {
 
                 {/* Square Footage */}
                 <div className="space-y-2">
-                  <Label htmlFor="squareFootage">Square Footage</Label>
+                  <Label htmlFor="squareFootage" className="text-black">Square Footage</Label>
                   <Input
                     id="squareFootage"
                     type="number"
                     placeholder="e.g., 2500"
                     value={formData.squareFootage}
                     onChange={(e) => handleInputChange('squareFootage', e.target.value)}
+                    className="border-gray-300 focus:border-orange-500 focus:ring-orange-500"
                   />
                 </div>
 
                 {/* Year Built and Lot Size */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="yearBuilt">Year Built</Label>
+                    <Label htmlFor="yearBuilt" className="text-black">Year Built</Label>
                     <Input
                       id="yearBuilt"
                       type="number"
                       placeholder="e.g., 2010"
                       value={formData.yearBuilt}
                       onChange={(e) => handleInputChange('yearBuilt', e.target.value)}
+                      className="border-gray-300 focus:border-orange-500 focus:ring-orange-500"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="lotSize">Lot Size (sq ft)</Label>
+                    <Label htmlFor="lotSize" className="text-black">Lot Size (sq ft)</Label>
                     <Input
                       id="lotSize"
                       type="number"
                       placeholder="e.g., 8000"
                       value={formData.lotSize}
                       onChange={(e) => handleInputChange('lotSize', e.target.value)}
+                      className="border-gray-300 focus:border-orange-500 focus:ring-orange-500"
                     />
                   </div>
                 </div>
@@ -201,7 +205,7 @@ const PredictPrice = () => {
                 <Button
                   onClick={handlePredict}
                   disabled={isLoading || !formData.location || !formData.propertyType}
-                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 h-12 text-lg font-semibold"
+                  className="w-full orange-gradient hover:orange-gradient-hover h-12 text-lg font-semibold text-white"
                 >
                   {isLoading ? (
                     <div className="flex items-center">
@@ -223,7 +227,7 @@ const PredictPrice = () => {
               {prediction ? (
                 <>
                   {/* Main Price Card */}
-                  <Card className="shadow-xl border-0 bg-gradient-to-br from-orange-500 to-orange-600 text-white">
+                  <Card className="shadow-xl border-0 orange-gradient text-white">
                     <CardHeader>
                       <CardTitle className="flex items-center text-2xl">
                         <DollarSign className="w-6 h-6 mr-2" />
@@ -257,7 +261,7 @@ const PredictPrice = () => {
 
                   {/* Additional Info Cards */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Card className="shadow-lg">
+                    <Card className="shadow-lg bg-white border border-gray-200">
                       <CardContent className="p-6">
                         <div className="text-center">
                           <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -269,7 +273,7 @@ const PredictPrice = () => {
                       </CardContent>
                     </Card>
                     
-                    <Card className="shadow-lg">
+                    <Card className="shadow-lg bg-white border border-gray-200">
                       <CardContent className="p-6">
                         <div className="text-center">
                           <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -285,7 +289,7 @@ const PredictPrice = () => {
                   </div>
                 </>
               ) : (
-                <Card className="shadow-xl border-0 border-dashed border-gray-300">
+                <Card className="shadow-xl border-2 border-dashed border-gray-300 bg-white">
                   <CardContent className="p-12 text-center">
                     <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Calculator className="w-8 h-8 text-orange-600" />

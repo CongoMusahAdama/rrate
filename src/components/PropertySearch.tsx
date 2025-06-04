@@ -39,10 +39,10 @@ const PropertySearch = ({ onSearch }: PropertySearchProps) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 animate-fade-in">
+    <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 animate-fade-in border border-gray-200">
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             <Search className="inline w-4 h-4 mr-1" />
             Search Location
           </label>
@@ -50,17 +50,17 @@ const PropertySearch = ({ onSearch }: PropertySearchProps) => {
             placeholder="Enter city, neighborhood, or address" 
             value={filters.location}
             onChange={handleLocationChange}
-            className="border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]"
+            className="border-gray-300 focus:border-orange-500 focus:ring-orange-500"
           />
         </div>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
+          <label className="block text-sm font-medium text-black mb-2">Property Type</label>
           <Select onValueChange={handlePropertyTypeChange} value={filters.propertyType || 'all'}>
-            <SelectTrigger className="border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]">
+            <SelectTrigger className="border-gray-300 focus:border-orange-500 focus:ring-orange-500 bg-white">
               <SelectValue placeholder="Any Type" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white border border-gray-200">
               <SelectItem value="all">Any Type</SelectItem>
               <SelectItem value="house">House</SelectItem>
               <SelectItem value="condo">Condo</SelectItem>
@@ -73,12 +73,12 @@ const PropertySearch = ({ onSearch }: PropertySearchProps) => {
         </div>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+          <label className="block text-sm font-medium text-black mb-2">Price Range</label>
           <Select onValueChange={handlePriceRangeChange} value={filters.priceRange || 'all'}>
-            <SelectTrigger className="border-gray-300 focus:border-[#5a1e24] focus:ring-[#5a1e24]">
+            <SelectTrigger className="border-gray-300 focus:border-orange-500 focus:ring-orange-500 bg-white">
               <SelectValue placeholder="Any Price" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white border border-gray-200">
               <SelectItem value="all">Any Price</SelectItem>
               <SelectItem value="0-500000">Under ₵500K</SelectItem>
               <SelectItem value="500000-1000000">₵500K - ₵1M</SelectItem>
@@ -90,7 +90,7 @@ const PropertySearch = ({ onSearch }: PropertySearchProps) => {
         
         <Button 
           onClick={handleSearch}
-          className="wine-gradient hover:wine-gradient-hover h-10"
+          className="orange-gradient hover:orange-gradient-hover h-10 text-white"
         >
           <Filter className="w-4 h-4 mr-2" />
           Search
