@@ -20,9 +20,10 @@ interface PropertyDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   property: Property | null;
+  onScheduleViewing?: () => void;
 }
 
-const PropertyDetailsModal = ({ isOpen, onClose, property }: PropertyDetailsModalProps) => {
+const PropertyDetailsModal = ({ isOpen, onClose, property, onScheduleViewing }: PropertyDetailsModalProps) => {
   if (!property) return null;
 
   const features = [
@@ -139,18 +140,19 @@ const PropertyDetailsModal = ({ isOpen, onClose, property }: PropertyDetailsModa
 
           {/* Action Buttons */}
           <div className="flex gap-3 pt-4">
-            <Button
-              variant="outline"
-              onClick={onClose}
-              className="flex-1"
-            >
-              Close
-            </Button>
-            <Button
-              className="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
-            >
-              Schedule Viewing
-            </Button>
+          <Button
+            variant="outline"
+            onClick={onClose}
+            className="flex-1"
+          >
+            Close
+          </Button>
+          <Button
+            className="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+            onClick={onScheduleViewing}
+          >
+            Schedule Viewing
+          </Button>
           </div>
         </div>
       </DialogContent>
