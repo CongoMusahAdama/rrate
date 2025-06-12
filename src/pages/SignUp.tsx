@@ -90,15 +90,15 @@ const SignUp = () => {
       <div 
         className="hidden lg:flex lg:w-1/2 relative"
         style={{
-          backgroundImage: `linear-gradient(rgba(90, 30, 36, 0.3), rgba(90, 30, 36, 0.5)), url('/lovable-uploads/f9ce6cf2-3ff9-43fe-badd-361826278f95.png')`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('/lovable-uploads/45f382c7-3908-4d59-ad73-4155ad73d2df.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white p-8">
-            <h2 className="text-4xl font-bold mb-4">Join RealRate</h2>
-            <p className="text-xl opacity-90">Start Your Property Journey Today</p>
+            <h2 className="text-4xl font-bold mb-4 drop-shadow-lg">Join RealRate</h2>
+            <p className="text-xl opacity-90 drop-shadow-md">Start Your Property Journey Today</p>
           </div>
         </div>
       </div>

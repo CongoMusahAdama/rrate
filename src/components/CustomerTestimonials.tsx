@@ -5,21 +5,18 @@ const CustomerTestimonials = () => {
       id: 1,
       name: 'Sarah Mensah',
       role: 'Property Buyer',
-      image: '/lovable-uploads/1961377a-f170-4b38-a356-d3ec9c96174c.png',
       content: 'RealRate helped me find the perfect home in Accra. The AI price prediction was spot-on, and I saved thousands on my purchase!'
     },
     {
       id: 2,
       name: 'Kwame Asante',
       role: 'Real Estate Investor',
-      image: '/lovable-uploads/56ab0d76-187c-4e43-8987-72ec33523c4d.png',
       content: 'As an investor, accurate property valuations are crucial. RealRate AI predictions have been incredibly reliable for my portfolio decisions.'
     },
     {
       id: 3,
       name: 'Akosua Osei',
       role: 'First-time Buyer',
-      image: '/lovable-uploads/6b288a42-15bd-4c5d-a7cf-238470f6e2c9.png',
       content: 'Being a first-time buyer was overwhelming, but RealRate made the process so much easier. I knew exactly what to expect price-wise!'
     }
   ];
@@ -48,13 +45,13 @@ const CustomerTestimonials = () => {
                 {testimonial.content}
               </p>
 
-              {/* Author */}
+              {/* Author - Without Image */}
               <div className="flex items-center">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover mr-4"
-                />
+                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-brand-blue to-brand-blue-light flex items-center justify-center mr-4">
+                  <span className="text-white font-semibold text-lg">
+                    {testimonial.name.split(' ').map(n => n[0]).join('')}
+                  </span>
+                </div>
                 <div>
                   <h4 className="font-semibold text-black">{testimonial.name}</h4>
                   <p className="text-sm text-gray-600">{testimonial.role}</p>
