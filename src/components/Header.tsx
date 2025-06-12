@@ -16,6 +16,15 @@ const Header = () => {
     navigate('/');
   };
 
+  const handleDashboardNavigation = () => {
+    if (user?.userType === 'estate-advertiser') {
+      navigate('/estate-dashboard');
+    } else {
+      // Regular users go to main page or profile
+      navigate('/');
+    }
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,8 +60,19 @@ const Header = () => {
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-2">
                   <User className="w-4 h-4 text-gray-600" />
-                  <span className="text-gray-700">{user.email}</span>
+                  <span className="text-gray-700">
+                    {user.firstName} {user.lastName}
+                  </span>
                 </div>
+                {user.userType === 'estate-advertiser' && (
+                  <Button
+                    onClick={handleDashboardNavigation}
+                    variant="outline"
+                    className="border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
+                  >
+                    Dashboard
+                  </Button>
+                )}
                 <Button
                   onClick={handleLogout}
                   variant="outline"
@@ -130,8 +150,22 @@ const Header = () => {
                 <div className="pt-4 border-t border-gray-200">
                   <div className="flex items-center space-x-2 mb-3">
                     <User className="w-4 h-4 text-gray-600" />
-                    <span className="text-gray-700">{user.email}</span>
+                    <span className="text-gray-700">
+                      {user.firstName} {user.lastName}
+                    </span>
                   </div>
+                  {user.userType === 'estate-advertiser' && (
+                    <Button
+                      onClick={() => {
+                        handleDashboardNavigation();
+                        setIsMenuOpen(false);
+                      }}
+                      variant="outline"
+                      className="w-full mb-3 border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
+                    >
+                      Dashboard
+                    </Button>
+                  )}
                   <Button
                     onClick={() => {
                       handleLogout();
