@@ -59,7 +59,9 @@ const AdminDashboard = () => {
     type: '',
     status: 'For Sale',
     description: '',
-    image: ''
+    image: '',
+    imageFile: null,
+    imagePreview: ''
   });
 
   // Chart data
@@ -101,6 +103,22 @@ const AdminDashboard = () => {
     });
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({
+          ...formData,
+          imageFile: file,
+          imagePreview: reader.result as string,
+          image: ''
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSelectChange = (name: string, value: string) => {
     setFormData({
       ...formData,
@@ -119,7 +137,9 @@ const AdminDashboard = () => {
       type: '',
       status: 'For Sale',
       description: '',
-      image: ''
+      image: '',
+      imageFile: null,
+      imagePreview: ''
     });
   };
 
@@ -130,7 +150,7 @@ const AdminDashboard = () => {
       ...formData,
       beds: parseInt(formData.beds),
       baths: parseInt(formData.baths),
-      image: formData.image || '/lovable-uploads/d35db465-e25d-4f59-b6dc-8b643a842ce7.png'
+      image: formData.imagePreview || formData.image || '/lovable-uploads/d35db465-e25d-4f59-b6dc-8b643a842ce7.png'
     };
     setProperties([...properties, newProperty]);
     setIsAddModalOpen(false);
@@ -153,7 +173,9 @@ const AdminDashboard = () => {
       type: property.type,
       status: property.status,
       description: property.description,
-      image: property.image
+      image: property.image,
+      imageFile: null,
+      imagePreview: ''
     });
     setIsEditModalOpen(true);
   };
@@ -167,7 +189,8 @@ const AdminDashboard = () => {
               ...prop,
               ...formData,
               beds: parseInt(formData.beds),
-              baths: parseInt(formData.baths)
+              baths: parseInt(formData.baths),
+              image: formData.imagePreview || formData.image
             }
           : prop
       );
@@ -550,14 +573,28 @@ const AdminDashboard = () => {
               />
             </div>
             <div>
-              <Label htmlFor="image">Image URL</Label>
+              <Label htmlFor="image">Image URL or Upload</Label>
               <Input
                 id="image"
                 name="image"
                 value={formData.image}
                 onChange={handleInputChange}
                 placeholder="https://example.com/image.jpg"
+                disabled={!!formData.imageFile}
               />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="mt-2"
+              />
+              {formData.imagePreview && (
+                <img
+                  src={formData.imagePreview}
+                  alt="Preview"
+                  className="mt-2 w-32 h-32 object-cover rounded-lg"
+                />
+              )}
             </div>
             <div className="flex gap-3">
               <Button

@@ -103,7 +103,7 @@ const CartModal = ({ isOpen, onClose }: CartModalProps) => {
         property={cartItems.length > 0 ? {
           name: `${cartItems.length} Properties`,
           location: 'Multiple Locations',
-          price: `GHS ${getTotalPrice().toLocaleString()}`
+          price: `GHS${getTotalPrice().toLocaleString()}`
         } : null}
         onPaymentSuccess={handlePaymentSuccess}
       />
