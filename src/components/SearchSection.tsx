@@ -65,12 +65,12 @@ const SearchSection = () => {
                 <Home className="inline w-4 h-4 mr-1" />
                 Property Type
               </label>
-              <Select onValueChange={(value) => setSearchData({...searchData, propertyType: value})}>
+              <Select onValueChange={(value) => setSearchData({...searchData, propertyType: value === 'any' ? '' : value})}>
                 <SelectTrigger className="w-full border-gray-300 focus:border-brand-blue focus:ring-brand-blue bg-white">
                   <SelectValue placeholder="Any Type" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border border-gray-200">
-                  <SelectItem value="">Any Type</SelectItem>
+                  <SelectItem value="any">Any Type</SelectItem>
                   <SelectItem value="house">House</SelectItem>
                   <SelectItem value="apartment">Apartment</SelectItem>
                   <SelectItem value="villa">Villa</SelectItem>
@@ -85,12 +85,12 @@ const SearchSection = () => {
                 <DollarSign className="inline w-4 h-4 mr-1" />
                 Price Range
               </label>
-              <Select onValueChange={(value) => setSearchData({...searchData, priceRange: value})}>
+              <Select onValueChange={(value) => setSearchData({...searchData, priceRange: value === 'any' ? '' : value})}>
                 <SelectTrigger className="w-full border-gray-300 focus:border-brand-blue focus:ring-brand-blue bg-white">
                   <SelectValue placeholder="Any Price" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border border-gray-200">
-                  <SelectItem value="">Any Price</SelectItem>
+                  <SelectItem value="any">Any Price</SelectItem>
                   <SelectItem value="0-500000">Under ₵500K</SelectItem>
                   <SelectItem value="500000-1000000">₵500K - ₵1M</SelectItem>
                   <SelectItem value="1000000-2000000">₵1M - ₵2M</SelectItem>

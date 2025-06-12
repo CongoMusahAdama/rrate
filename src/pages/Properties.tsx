@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/components/ui/use-toast';
 import { useCart } from '@/contexts/CartContext';
+import { Search } from 'lucide-react';
 
 const allProperties = [
   {
