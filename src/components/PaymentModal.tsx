@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Loader2 } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -20,39 +19,16 @@ declare global {
 
 const PaymentModal = ({ isOpen, onClose, property, onPaymentSuccess }: PaymentModalProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
-  const { user } = useAuth();
 
   const initializePayment = () => {
-    if (!property?.price) {
-      console.error('Property price is required for payment');
-      return;
-    }
-
     setIsProcessing(true);
-    
-    // Extract numeric amount from price string and convert to kobo
-    const priceString = property.price.toString();
-    const numericAmount = parseFloat(priceString.replace(/[₵,GHS\s]/g, ''));
-    const amountInKobo = Math.round(numericAmount * 100);
-
-    console.log('Payment details:', {
-      originalPrice: property.price,
-      numericAmount,
-      amountInKobo
-    });
-
-    if (amountInKobo <= 0) {
-      console.error('Invalid amount calculated:', amountInKobo);
-      setIsProcessing(false);
-      return;
-    }
     
     const handler = window.PaystackPop.setup({
       key: 'pk_live_abd71123626a60688c205672d269418120e94789',
-      email: user?.email || 'customer@email.com',
-      amount: amountInKobo,
+      email: 'customer@email.com', // This would typically come from auth context
+      amount: parseFloat(property?.price?.replace(/[₵,]/g, '') || '0') * 100, // Convert to kobo
       currency: 'GHS',
-      ref: `ref_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      ref: `ref_${Date.now()}`,
       callback: function(response: any) {
         console.log('Payment successful:', response);
         setIsProcessing(false);

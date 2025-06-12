@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { BarChart3, Users, Home, TrendingUp, Plus, Settings, LogOut, Edit, Trash2, Eye, Search, AlertTriangle, CheckCircle } from 'lucide-react';
+import { BarChart3, Users, Home, TrendingUp, Plus, Settings, LogOut, Edit, Trash2, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -8,18 +8,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
-import ImageUpload from '@/components/ImageUpload';
 
 const AdminDashboard = () => {
   const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState('dashboard');
   const [properties, setProperties] = useState([
     {
       id: 1,
@@ -47,17 +44,6 @@ const AdminDashboard = () => {
       status: 'For Sale',
       description: 'Luxury penthouse with city views'
     }
-  ]);
-
-  const [users, setUsers] = useState([
-    { id: 1, email: 'john@example.com', name: 'John Doe', type: 'customer', status: 'active', joinDate: '2024-01-15' },
-    { id: 2, email: 'jane@realestate.com', name: 'Jane Smith', type: 'estate-advertiser', status: 'active', joinDate: '2024-02-20' },
-    { id: 3, email: 'mike@example.com', name: 'Mike Johnson', type: 'customer', status: 'inactive', joinDate: '2024-03-10' }
-  ]);
-
-  const [disputes, setDisputes] = useState([
-    { id: 1, propertyId: 1, reportedBy: 'john@example.com', reason: 'Misleading property description', status: 'pending', date: '2024-06-10' },
-    { id: 2, propertyId: 2, reportedBy: 'mike@example.com', reason: 'Price discrepancy', status: 'resolved', date: '2024-06-08' }
   ]);
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -204,28 +190,6 @@ const AdminDashboard = () => {
     });
   };
 
-  const handleResolveDispute = (disputeId: number) => {
-    setDisputes(disputes.map(dispute =>
-      dispute.id === disputeId ? { ...dispute, status: 'resolved' } : dispute
-    ));
-    toast({
-      title: "Dispute Resolved",
-      description: "The dispute has been marked as resolved.",
-    });
-  };
-
-  const toggleUserStatus = (userId: number) => {
-    setUsers(users.map(user =>
-      user.id === userId 
-        ? { ...user, status: user.status === 'active' ? 'inactive' : 'active' }
-        : user
-    ));
-    toast({
-      title: "User Status Updated",
-      description: "User status has been updated successfully.",
-    });
-  };
-
   if (!isAdmin) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -257,7 +221,7 @@ const AdminDashboard = () => {
             </Link>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-gray-600">Welcome, {user?.firstName} {user?.lastName}</span>
+            <span className="text-gray-600">Welcome, {user?.email}</span>
             <Button 
               onClick={handleLogout}
               variant="outline" 
@@ -272,301 +236,209 @@ const AdminDashboard = () => {
 
       {/* Main Content */}
       <div className="p-6">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-            <TabsTrigger value="users">Manage Users</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="disputes">Settle Disputes</TabsTrigger>
-          </TabsList>
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <Card className="bg-white border-gray-200">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">Total Properties</CardTitle>
+              <Home className="h-4 w-4 text-[#0ea5e9]" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-black">{properties.length}</div>
+              <p className="text-xs text-gray-500">+12% from last month</p>
+            </CardContent>
+          </Card>
 
-          <TabsContent value="dashboard" className="space-y-6">
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Card className="bg-white border-gray-200">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">Total Properties</CardTitle>
-                  <Home className="h-4 w-4 text-[#0ea5e9]" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-black">{properties.length}</div>
-                  <p className="text-xs text-gray-500">+12% from last month</p>
-                </CardContent>
-              </Card>
+          <Card className="bg-white border-gray-200">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">Active Users</CardTitle>
+              <Users className="h-4 w-4 text-[#0ea5e9]" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-black">8,642</div>
+              <p className="text-xs text-gray-500">+5% from last month</p>
+            </CardContent>
+          </Card>
 
-              <Card className="bg-white border-gray-200">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">Active Users</CardTitle>
-                  <Users className="h-4 w-4 text-[#0ea5e9]" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-black">0</div>
-                  <p className="text-xs text-gray-500">System not yet live</p>
-                </CardContent>
-              </Card>
+          <Card className="bg-white border-gray-200">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">Total Revenue</CardTitle>
+              <TrendingUp className="h-4 w-4 text-[#0ea5e9]" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-black">GHS 124,580</div>
+              <p className="text-xs text-gray-500">+18% from last month</p>
+            </CardContent>
+          </Card>
 
-              <Card className="bg-white border-gray-200">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">Total Revenue</CardTitle>
-                  <TrendingUp className="h-4 w-4 text-[#0ea5e9]" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-black">GHS 0</div>
-                  <p className="text-xs text-gray-500">System not yet live</p>
-                </CardContent>
-              </Card>
+          <Card className="bg-white border-gray-200">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">AI Predictions</CardTitle>
+              <BarChart3 className="h-4 w-4 text-[#0ea5e9]" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-black">95.7%</div>
+              <p className="text-xs text-gray-500">Accuracy rate</p>
+            </CardContent>
+          </Card>
+        </div>
 
-              <Card className="bg-white border-gray-200">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">AI Predictions</CardTitle>
-                  <BarChart3 className="h-4 w-4 text-[#0ea5e9]" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-black">95.7%</div>
-                  <p className="text-xs text-gray-500">Accuracy rate</p>
-                </CardContent>
-              </Card>
+        {/* Charts */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <Card className="bg-white border-gray-200">
+            <CardHeader>
+              <CardTitle className="text-black">Monthly Statistics</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ChartContainer config={chartConfig} className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={monthlyData}>
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <Bar dataKey="users" fill="#0ea5e9" />
+                    <Bar dataKey="properties" fill="#10b981" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border-gray-200">
+            <CardHeader>
+              <CardTitle className="text-black">Growth Trends</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ChartContainer config={chartConfig} className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={monthlyData}>
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <Line type="monotone" dataKey="bookings" stroke="#f59e0b" strokeWidth={2} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <Card className="bg-white border-gray-200">
+            <CardHeader>
+              <CardTitle className="text-black">Quick Actions</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Button 
+                onClick={() => setIsAddModalOpen(true)}
+                className="w-full justify-start bg-[#0ea5e9] hover:bg-[#0284c7] text-white"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add New Property
+              </Button>
+              <Button variant="outline" className="w-full justify-start border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white">
+                <Users className="w-4 h-4 mr-2" />
+                Manage Users
+              </Button>
+              <Button variant="outline" className="w-full justify-start border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white">
+                <BarChart3 className="w-4 h-4 mr-2" />
+                View Analytics
+              </Button>
+              <Button variant="outline" className="w-full justify-start border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white">
+                <Settings className="w-4 h-4 mr-2" />
+                Settle Disputes
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border-gray-200">
+            <CardHeader>
+              <CardTitle className="text-black">Recent Activity</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">New property listed</span>
+                  <span className="text-xs text-gray-500">2 min ago</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">User registration</span>
+                  <span className="text-xs text-gray-500">5 min ago</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">AI prediction updated</span>
+                  <span className="text-xs text-gray-500">10 min ago</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Dispute resolved</span>
+                  <span className="text-xs text-gray-500">15 min ago</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Property Management Table */}
+        <Card className="bg-white border-gray-200">
+          <CardHeader>
+            <CardTitle className="text-black">Property Management</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-3 px-4 text-gray-600">Property</th>
+                    <th className="text-left py-3 px-4 text-gray-600">Location</th>
+                    <th className="text-left py-3 px-4 text-gray-600">Price</th>
+                    <th className="text-left py-3 px-4 text-gray-600">Status</th>
+                    <th className="text-left py-3 px-4 text-gray-600">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {properties.map((property) => (
+                    <tr key={property.id} className="border-b border-gray-200">
+                      <td className="py-3 px-4 text-black">{property.name}</td>
+                      <td className="py-3 px-4 text-gray-600">{property.location}</td>
+                      <td className="py-3 px-4 text-black">{property.price}</td>
+                      <td className="py-3 px-4">
+                        <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
+                          {property.status}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <div className="flex space-x-2">
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
+                            onClick={() => handleEditProperty(property)}
+                          >
+                            <Edit className="w-3 h-3" />
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+                            onClick={() => handleDeleteProperty(property.id)}
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-
-            {/* Quick Actions */}
-            <Card className="bg-white border-gray-200">
-              <CardHeader>
-                <CardTitle className="text-black">Quick Actions</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Button 
-                  onClick={() => setIsAddModalOpen(true)}
-                  className="w-full justify-start bg-[#0ea5e9] hover:bg-[#0284c7] text-white"
-                >
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add New Property
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Property Management Table */}
-            <Card className="bg-white border-gray-200">
-              <CardHeader>
-                <CardTitle className="text-black">Property Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-3 px-4 text-gray-600">Property</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Location</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Price</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Status</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {properties.map((property) => (
-                        <tr key={property.id} className="border-b border-gray-200">
-                          <td className="py-3 px-4 text-black">{property.name}</td>
-                          <td className="py-3 px-4 text-gray-600">{property.location}</td>
-                          <td className="py-3 px-4 text-black">{property.price}</td>
-                          <td className="py-3 px-4">
-                            <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
-                              {property.status}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4">
-                            <div className="flex space-x-2">
-                              <Button 
-                                size="sm" 
-                                variant="outline" 
-                                className="border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
-                                onClick={() => handleEditProperty(property)}
-                              >
-                                <Edit className="w-3 h-3" />
-                              </Button>
-                              <Button 
-                                size="sm" 
-                                variant="outline" 
-                                className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
-                                onClick={() => handleDeleteProperty(property.id)}
-                              >
-                                <Trash2 className="w-3 h-3" />
-                              </Button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="users" className="space-y-6">
-            <Card className="bg-white border-gray-200">
-              <CardHeader>
-                <CardTitle className="text-black">User Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-3 px-4 text-gray-600">User</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Email</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Type</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Status</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Join Date</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {users.map((user) => (
-                        <tr key={user.id} className="border-b border-gray-200">
-                          <td className="py-3 px-4 text-black">{user.name}</td>
-                          <td className="py-3 px-4 text-gray-600">{user.email}</td>
-                          <td className="py-3 px-4">
-                            <span className={`px-2 py-1 rounded-full text-xs ${
-                              user.type === 'estate-advertiser' 
-                                ? 'bg-blue-100 text-blue-800' 
-                                : 'bg-gray-100 text-gray-800'
-                            }`}>
-                              {user.type}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4">
-                            <span className={`px-2 py-1 rounded-full text-xs ${
-                              user.status === 'active' 
-                                ? 'bg-green-100 text-green-800' 
-                                : 'bg-red-100 text-red-800'
-                            }`}>
-                              {user.status}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 text-gray-600">{user.joinDate}</td>
-                          <td className="py-3 px-4">
-                            <Button 
-                              size="sm" 
-                              variant="outline" 
-                              className="border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
-                              onClick={() => toggleUserStatus(user.id)}
-                            >
-                              {user.status === 'active' ? 'Deactivate' : 'Activate'}
-                            </Button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="analytics" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="bg-white border-gray-200">
-                <CardHeader>
-                  <CardTitle className="text-black">Monthly Statistics</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ChartContainer config={chartConfig} className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={monthlyData}>
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Bar dataKey="users" fill="#0ea5e9" />
-                        <Bar dataKey="properties" fill="#10b981" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </ChartContainer>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white border-gray-200">
-                <CardHeader>
-                  <CardTitle className="text-black">Growth Trends</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ChartContainer config={chartConfig} className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={monthlyData}>
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Line type="monotone" dataKey="bookings" stroke="#f59e0b" strokeWidth={2} />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </ChartContainer>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="disputes" className="space-y-6">
-            <Card className="bg-white border-gray-200">
-              <CardHeader>
-                <CardTitle className="text-black">Dispute Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-3 px-4 text-gray-600">Property ID</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Reported By</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Reason</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Status</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Date</th>
-                        <th className="text-left py-3 px-4 text-gray-600">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {disputes.map((dispute) => (
-                        <tr key={dispute.id} className="border-b border-gray-200">
-                          <td className="py-3 px-4 text-black">#{dispute.propertyId}</td>
-                          <td className="py-3 px-4 text-gray-600">{dispute.reportedBy}</td>
-                          <td className="py-3 px-4 text-gray-600">{dispute.reason}</td>
-                          <td className="py-3 px-4">
-                            <span className={`px-2 py-1 rounded-full text-xs flex items-center gap-1 w-fit ${
-                              dispute.status === 'resolved' 
-                                ? 'bg-green-100 text-green-800' 
-                                : 'bg-yellow-100 text-yellow-800'
-                            }`}>
-                              {dispute.status === 'resolved' ? (
-                                <CheckCircle className="w-3 h-3" />
-                              ) : (
-                                <AlertTriangle className="w-3 h-3" />
-                              )}
-                              {dispute.status}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 text-gray-600">{dispute.date}</td>
-                          <td className="py-3 px-4">
-                            {dispute.status === 'pending' && (
-                              <Button 
-                                size="sm" 
-                                className="bg-[#0ea5e9] hover:bg-[#0284c7] text-white"
-                                onClick={() => handleResolveDispute(dispute.id)}
-                              >
-                                Resolve
-                              </Button>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Add Property Modal */}
       <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
-        <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-md max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-black">Add New Property</DialogTitle>
           </DialogHeader>
@@ -581,12 +453,6 @@ const AdminDashboard = () => {
                 required
               />
             </div>
-            
-            <ImageUpload
-              onImageSelect={(imageUrl) => setFormData({...formData, image: imageUrl})}
-              currentImage={formData.image}
-            />
-            
             <div>
               <Label htmlFor="price">Price (GHS)</Label>
               <Input
@@ -598,7 +464,6 @@ const AdminDashboard = () => {
                 required
               />
             </div>
-            
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="beds">Bedrooms</Label>
@@ -684,6 +549,16 @@ const AdminDashboard = () => {
                 rows={3}
               />
             </div>
+            <div>
+              <Label htmlFor="image">Image URL</Label>
+              <Input
+                id="image"
+                name="image"
+                value={formData.image}
+                onChange={handleInputChange}
+                placeholder="https://example.com/image.jpg"
+              />
+            </div>
             <div className="flex gap-3">
               <Button
                 type="button"
@@ -706,11 +581,12 @@ const AdminDashboard = () => {
 
       {/* Edit Property Modal */}
       <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
-        <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-md max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-black">Edit Property</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleUpdateProperty} className="space-y-4">
+            {/* Same form fields as Add Property Modal */}
             <div>
               <Label htmlFor="name">Property Name</Label>
               <Input
@@ -721,10 +597,6 @@ const AdminDashboard = () => {
                 required
               />
             </div>
-            <ImageUpload
-              onImageSelect={(imageUrl) => setFormData({...formData, image: imageUrl})}
-              currentImage={formData.image}
-            />
             <div>
               <Label htmlFor="price">Price (GHS)</Label>
               <Input
@@ -819,6 +691,16 @@ const AdminDashboard = () => {
                 value={formData.description}
                 onChange={handleInputChange}
                 rows={3}
+              />
+            </div>
+            <div>
+              <Label htmlFor="image">Image URL</Label>
+              <Input
+                id="image"
+                name="image"
+                value={formData.image}
+                onChange={handleInputChange}
+                placeholder="https://example.com/image.jpg"
               />
             </div>
             <div className="flex gap-3">
