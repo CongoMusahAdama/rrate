@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export interface User {
@@ -29,7 +30,8 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const adminEmails = ['admin@realrate1', 'admin@realrate2', 'admin@realrate123'];
+  // Updated admin email to match the login credentials
+  const adminEmails = ['admin@realrate123'];
 
   useEffect(() => {
     // Check for stored user data on component mount

@@ -1,106 +1,114 @@
 
-import { useState, useEffect } from 'react';
-import { Search, MapPin, Home, DollarSign } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Search, MapPin, Home, DollarSign } from 'lucide-react';
 
 const SearchSection = () => {
-  const [location, setLocation] = useState('');
-  const [propertyType, setPropertyType] = useState('');
-  const [budget, setBudget] = useState('');
-  const [currency, setCurrency] = useState('GHS');
-
-  useEffect(() => {
-    // Always use GHS for Ghana
-    setCurrency('GHS');
-  }, []);
+  const navigate = useNavigate();
+  const [searchData, setSearchData] = useState({
+    location: '',
+    propertyType: '',
+    priceRange: ''
+  });
 
   const handleSearch = () => {
-    console.log('Searching with:', { location, propertyType, budget, currency });
-    // Here you would implement the actual search functionality
+    // Check if any search criteria is provided
+    const hasSearchCriteria = searchData.location || searchData.propertyType || searchData.priceRange;
+    
+    if (!hasSearchCriteria) {
+      // If no search criteria, just navigate to properties page
+      navigate('/properties');
+      return;
+    }
+
+    // Create URL with search parameters
+    const searchParams = new URLSearchParams();
+    if (searchData.location) searchParams.set('location', searchData.location);
+    if (searchData.propertyType) searchParams.set('type', searchData.propertyType);
+    if (searchData.priceRange) searchParams.set('price', searchData.priceRange);
+    
+    navigate(`/properties?${searchParams.toString()}`);
   };
 
-  const budgetOptions = [
-    { value: '0-600000', label: 'Under ₵600K' },
-    { value: '600000-1200000', label: '₵600K - ₵1.2M' },
-    { value: '1200000-2400000', label: '₵1.2M - ₵2.4M' },
-    { value: '2400000-6000000', label: '₵2.4M - ₵6M' },
-    { value: '6000000+', label: '₵6M+' }
-  ];
-
   return (
-    <section className="relative -mt-20 z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-black mb-2">Search for available properties in Ghana</h2>
-          <p className="text-gray-600">Find your dream home with our advanced AI-powered search</p>
+    <section className="py-16 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            Find Your Perfect Home
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Search through thousands of properties with our advanced search filters
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-          {/* Location */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
-              <MapPin className="inline w-4 h-4 mr-1" />
-              Location
-            </label>
-            <Input
-              type="text"
-              placeholder="Enter city or area"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className="w-full border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]"
-            />
-          </div>
+        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="md:col-span-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                <MapPin className="inline w-4 h-4 mr-1" />
+                Location
+              </label>
+              <Input
+                placeholder="Enter location"
+                value={searchData.location}
+                onChange={(e) => setSearchData({...searchData, location: e.target.value})}
+                className="w-full border-gray-300 focus:border-brand-blue focus:ring-brand-blue"
+              />
+            </div>
 
-          {/* Property Type */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
-              <Home className="inline w-4 h-4 mr-1" />
-              Property Type
-            </label>
-            <Select value={propertyType} onValueChange={setPropertyType}>
-              <SelectTrigger className="w-full border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]">
-                <SelectValue placeholder="Select type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="apartment">Apartment</SelectItem>
-                <SelectItem value="house">House</SelectItem>
-                <SelectItem value="villa">Villa</SelectItem>
-                <SelectItem value="townhouse">Townhouse</SelectItem>
-                <SelectItem value="compound">Compound House</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+            <div className="md:col-span-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                <Home className="inline w-4 h-4 mr-1" />
+                Property Type
+              </label>
+              <Select onValueChange={(value) => setSearchData({...searchData, propertyType: value})}>
+                <SelectTrigger className="w-full border-gray-300 focus:border-brand-blue focus:ring-brand-blue bg-white">
+                  <SelectValue placeholder="Any Type" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200">
+                  <SelectItem value="">Any Type</SelectItem>
+                  <SelectItem value="house">House</SelectItem>
+                  <SelectItem value="apartment">Apartment</SelectItem>
+                  <SelectItem value="villa">Villa</SelectItem>
+                  <SelectItem value="penthouse">Penthouse</SelectItem>
+                  <SelectItem value="townhouse">Townhouse</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          {/* Budget */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
-              <DollarSign className="inline w-4 h-4 mr-1" />
-              Budget ({currency})
-            </label>
-            <Select value={budget} onValueChange={setBudget}>
-              <SelectTrigger className="w-full border-gray-300 focus:border-[#722f37] focus:ring-[#722f37]">
-                <SelectValue placeholder="Select budget" />
-              </SelectTrigger>
-              <SelectContent>
-                {budgetOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+            <div className="md:col-span-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                <DollarSign className="inline w-4 h-4 mr-1" />
+                Price Range
+              </label>
+              <Select onValueChange={(value) => setSearchData({...searchData, priceRange: value})}>
+                <SelectTrigger className="w-full border-gray-300 focus:border-brand-blue focus:ring-brand-blue bg-white">
+                  <SelectValue placeholder="Any Price" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200">
+                  <SelectItem value="">Any Price</SelectItem>
+                  <SelectItem value="0-500000">Under ₵500K</SelectItem>
+                  <SelectItem value="500000-1000000">₵500K - ₵1M</SelectItem>
+                  <SelectItem value="1000000-2000000">₵1M - ₵2M</SelectItem>
+                  <SelectItem value="2000000+">₵2M+</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          {/* Search Button */}
-          <Button
-            onClick={handleSearch}
-            className="wine-gradient hover:wine-gradient-hover text-white h-10 px-8 rounded-lg transition-all transform hover:scale-105"
-          >
-            <Search className="w-4 h-4 mr-2" />
-            Search Now
-          </Button>
+            <div className="md:col-span-1 flex items-end">
+              <Button 
+                onClick={handleSearch}
+                className="w-full brand-button h-10"
+              >
+                <Search className="w-4 h-4 mr-2" />
+                Search
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

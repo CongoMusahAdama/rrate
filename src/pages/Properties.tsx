@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PropertyDetailsModal from '@/components/PropertyDetailsModal';
 import ContactModal from '@/components/ContactModal';
-import PaymentModal from '@/components/PaymentModal';
 import PropertySearch, { SearchFilters } from '@/components/PropertySearch';
 import PropertyCard from '@/components/PropertyCard';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/components/ui/use-toast';
+import { useCart } from '@/contexts/CartContext';
 
 const allProperties = [
   {
@@ -86,14 +87,26 @@ const allProperties = [
 ];
 
 const Properties = () => {
+  const [searchParams] = useSearchParams();
   const [filteredProperties, setFilteredProperties] = useState(allProperties);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [noResults, setNoResults] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [propertiesPerPage] = useState(6);
+  const { addToCart } = useCart();
+
+  // Apply search filters from URL on component mount
+  useEffect(() => {
+    const location = searchParams.get('location') || '';
+    const propertyType = searchParams.get('type') || '';
+    const priceRange = searchParams.get('price') || '';
+
+    if (location || propertyType || priceRange) {
+      handleSearch({ location, propertyType, priceRange });
+    }
+  }, [searchParams]);
 
   // Calculate pagination
   const indexOfLastProperty = currentPage * propertiesPerPage;
@@ -134,7 +147,7 @@ const Properties = () => {
 
     setFilteredProperties(filtered);
     setNoResults(filtered.length === 0);
-    setCurrentPage(1); // Reset to first page after search
+    setCurrentPage(1);
   };
 
   const handleViewDetails = (property: typeof allProperties[0]) => {
@@ -147,15 +160,11 @@ const Properties = () => {
     setIsContactModalOpen(true);
   };
 
-  const handleBook = (property: typeof allProperties[0]) => {
-    setSelectedProperty(property);
-    setIsPaymentModalOpen(true);
-  };
-
-  const handlePaymentSuccess = () => {
+  const handleAddToCart = (property: typeof allProperties[0]) => {
+    addToCart(property);
     toast({
-      title: "Booking Confirmed!",
-      description: "Your payment was successful and your booking has been confirmed.",
+      title: "Added to Cart!",
+      description: `${property.name} has been added to your cart.`,
     });
   };
 
@@ -165,125 +174,123 @@ const Properties = () => {
   };
 
   return (
-    <>
-      {/* Add Paystack script */}
-      <script src="https://js.paystack.co/v1/inline.js"></script>
+    <div className="min-h-screen bg-white">
+      <Header />
       
-      <div className="min-h-screen bg-white">
-        <Header />
-        
-        <div className="pt-20 pb-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Page Header */}
-            <div className="text-center mb-12 animate-fade-in">
-              <h1 className="text-4xl lg:text-5xl font-bold text-black mb-4">
-                Find Your
-                <span className="block text-[#0ea5e9]">
-                  Dream Property
-                </span>
-              </h1>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Discover amazing properties with AI-powered price insights
-              </p>
-            </div>
-
-            {/* Search Component */}
-            <PropertySearch onSearch={handleSearch} />
-
-            {/* Results Header */}
-            <div className="flex items-center justify-between mb-6 animate-fade-in">
-              <div>
-                <h2 className="text-2xl font-bold text-black">Properties for Sale</h2>
-                <p className="text-gray-600">{filteredProperties.length} properties found</p>
-              </div>
-              <Select>
-                <SelectTrigger className="w-48 border-gray-300 focus:border-[#0ea5e9] focus:ring-[#0ea5e9] bg-white">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200">
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
-                  <SelectItem value="newest">Newest First</SelectItem>
-                  <SelectItem value="beds">Most Bedrooms</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* No Results Message */}
-            {noResults && (
-              <div className="text-center py-12 animate-fade-in">
-                <div className="max-w-md mx-auto">
-                  <h3 className="text-xl font-semibold text-black mb-2">No Properties Found</h3>
-                  <p className="text-gray-600 mb-6">
-                    Sorry, we couldn't meet your request at the moment. Please check back later or explore new options.
-                  </p>
-                  <Button
-                    onClick={() => {
-                      setFilteredProperties(allProperties);
-                      setNoResults(false);
-                    }}
-                    className="brand-button"
-                  >
-                    View All Properties
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Properties Grid */}
-            {!noResults && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {currentProperties.map((property, index) => (
-                  <PropertyCard
-                    key={property.id}
-                    property={property}
-                    index={index}
-                    onViewDetails={handleViewDetails}
-                    onContact={handleContact}
-                    onBook={handleBook}
-                  />
-                ))}
-              </div>
-            )}
-
-            {/* Pagination */}
-            {!noResults && totalPages > 1 && (
-              <div className="flex justify-center items-center mt-12 space-x-2">
-                <Button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  variant="outline"
-                  className="border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
-                >
-                  Previous
-                </Button>
-                
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <Button
-                    key={i + 1}
-                    onClick={() => handlePageChange(i + 1)}
-                    variant={currentPage === i + 1 ? "default" : "outline"}
-                    className={currentPage === i + 1 ? "brand-button" : "border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"}
-                  >
-                    {i + 1}
-                  </Button>
-                ))}
-                
-                <Button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  variant="outline"
-                  className="border-[#0ea5e9] text-[#0ea5e9] hover:bg-[#0ea5e9] hover:text-white"
-                >
-                  Next
-                </Button>
-              </div>
-            )}
+      <div className="pt-20 pb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Page Header */}
+          <div className="text-center mb-12 animate-fade-in">
+            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+              Find Your
+              <span className="block text-brand-blue">
+                Dream Property
+              </span>
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Discover amazing properties with AI-powered price insights
+            </p>
           </div>
-        </div>
 
-        <Footer />
+          {/* Search Component */}
+          <PropertySearch onSearch={handleSearch} />
+
+          {/* Results Header */}
+          <div className="flex items-center justify-between mb-6 animate-fade-in">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">Properties for Sale</h2>
+              <p className="text-gray-600">{filteredProperties.length} properties found</p>
+            </div>
+            <Select>
+              <SelectTrigger className="w-48 border-gray-300 focus:border-brand-blue focus:ring-brand-blue bg-white">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200">
+                <SelectItem value="price-low">Price: Low to High</SelectItem>
+                <SelectItem value="price-high">Price: High to Low</SelectItem>
+                <SelectItem value="newest">Newest First</SelectItem>
+                <SelectItem value="beds">Most Bedrooms</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* No Results Message */}
+          {noResults && (
+            <div className="text-center py-16 animate-fade-in">
+              <div className="max-w-md mx-auto bg-gray-50 rounded-lg p-8">
+                <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Search className="w-8 h-8 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">No Properties Found</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  No properties matched your search. Please try different filters or criteria, or check back in a few days for new listings.
+                </p>
+                <Button
+                  onClick={() => {
+                    setFilteredProperties(allProperties);
+                    setNoResults(false);
+                  }}
+                  className="brand-button"
+                >
+                  View All Properties
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Properties Grid */}
+          {!noResults && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {currentProperties.map((property, index) => (
+                <PropertyCard
+                  key={property.id}
+                  property={property}
+                  index={index}
+                  onViewDetails={handleViewDetails}
+                  onContact={handleContact}
+                  onBook={handleAddToCart}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Pagination */}
+          {!noResults && totalPages > 1 && (
+            <div className="flex justify-center items-center mt-12 space-x-2">
+              <Button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                variant="outline"
+                className="border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white"
+              >
+                Previous
+              </Button>
+              
+              {Array.from({ length: totalPages }, (_, i) => (
+                <Button
+                  key={i + 1}
+                  onClick={() => handlePageChange(i + 1)}
+                  variant={currentPage === i + 1 ? "default" : "outline"}
+                  className={currentPage === i + 1 ? "brand-button" : "border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white"}
+                >
+                  {i + 1}
+                </Button>
+              ))}
+              
+              <Button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                variant="outline"
+                className="border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white"
+              >
+                Next
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
+
+      <Footer />
 
       <PropertyDetailsModal
         isOpen={isDetailsModalOpen}
@@ -296,14 +303,7 @@ const Properties = () => {
         onClose={() => setIsContactModalOpen(false)}
         property={selectedProperty}
       />
-
-      <PaymentModal
-        isOpen={isPaymentModalOpen}
-        onClose={() => setIsPaymentModalOpen(false)}
-        property={selectedProperty}
-        onPaymentSuccess={handlePaymentSuccess}
-      />
-    </>
+    </div>
   );
 };
 

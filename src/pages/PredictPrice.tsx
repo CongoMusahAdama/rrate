@@ -1,11 +1,11 @@
 
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Calculator, TrendingUp, MapPin, Home, DollarSign } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { MapPin, Home, Bed, Bath, Square, TrendingUp, Calculator, Brain } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -15,52 +15,53 @@ const PredictPrice = () => {
     propertyType: '',
     bedrooms: '',
     bathrooms: '',
-    squareFootage: '',
+    squareFeet: '',
     yearBuilt: '',
-    lotSize: '',
-    amenities: []
+    condition: ''
   });
 
-  const [prediction, setPrediction] = useState(null);
+  const [prediction, setPrediction] = useState<{
+    estimatedPrice: number;
+    confidence: number;
+    marketTrend: string;
+  } | null>(null);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handlePredict = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate API call with mock prediction
-    setTimeout(() => {
-      const mockPrice = Math.floor(Math.random() * 2000000) + 500000;
-      const mockAccuracy = (Math.random() * 10 + 85).toFixed(1);
-      
-      setPrediction({
-        estimatedPrice: mockPrice,
-        accuracy: mockAccuracy,
-        priceRange: {
-          min: mockPrice * 0.9,
-          max: mockPrice * 1.1
-        },
-        marketTrend: Math.random() > 0.5 ? 'up' : 'down',
-        trendPercentage: (Math.random() * 10 + 2).toFixed(1)
-      });
-      
-      setIsLoading(false);
-    }, 2000);
-  };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
+    // Simulate AI prediction with realistic Ghana property prices
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    const basePrice = 150000; // Base price in GHS
+    const locationMultiplier = formData.location === 'East Legon' ? 3.5 : 
+                              formData.location === 'Cantonments' ? 3.0 :
+                              formData.location === 'Airport Residential' ? 2.5 : 1.5;
+    
+    const propertyMultiplier = formData.propertyType === 'Villa' ? 2.0 :
+                              formData.propertyType === 'Penthouse' ? 1.8 :
+                              formData.propertyType === 'House' ? 1.5 : 1.2;
+
+    const bedroomMultiplier = parseInt(formData.bedrooms) * 0.3 + 1;
+    const sqftMultiplier = parseInt(formData.squareFeet) / 1000 * 0.5 + 1;
+
+    const estimatedPrice = Math.round(
+      basePrice * locationMultiplier * propertyMultiplier * bedroomMultiplier * sqftMultiplier
+    );
+
+    setPrediction({
+      estimatedPrice,
+      confidence: Math.round(85 + Math.random() * 10),
+      marketTrend: 'Increasing'
+    });
+
+    setIsLoading(false);
   };
 
   return (
@@ -68,239 +69,253 @@ const PredictPrice = () => {
       <Header />
       
       <div className="pt-20 pb-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page Header */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center bg-blue-100 text-blue-800 text-sm font-medium px-4 py-2 rounded-full mb-6">
-              <Calculator className="w-4 h-4 mr-2" />
-              AI Price Prediction
+            <div className="flex items-center justify-center mb-4">
+              <div className="p-3 bg-brand-blue rounded-full">
+                <Brain className="w-8 h-8 text-white" />
+              </div>
             </div>
-            <h1 className="text-4xl lg:text-5xl font-bold text-black mb-4">
-              Get Your Property
-              <span className="block bg-gradient-to-r from-blue-500 to-blue-600 bg-clip-text text-transparent">
-                Price Estimate
-              </span>
+            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+              AI Property
+              <span className="block text-brand-blue">Price Prediction</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Our advanced AI model analyzes market data to provide accurate property valuations
+              Get accurate property valuations powered by advanced AI algorithms and real market data
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Input Form */}
-            <Card className="shadow-xl border border-gray-200 bg-white">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Form Section */}
+            <Card className="border border-gray-200 shadow-lg">
               <CardHeader>
-                <CardTitle className="flex items-center text-2xl text-black">
-                  <Home className="w-6 h-6 mr-2 text-blue-500" />
+                <CardTitle className="flex items-center text-gray-900">
+                  <Calculator className="w-5 h-5 mr-2 text-brand-blue" />
                   Property Details
                 </CardTitle>
-                <CardDescription className="text-gray-600">
-                  Provide accurate information for the best price estimate
+                <CardDescription>
+                  Fill in the details below to get your AI-powered price estimate
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Location */}
-                <div className="space-y-2">
-                  <Label htmlFor="location" className="flex items-center text-black">
-                    <MapPin className="w-4 h-4 mr-1" />
-                    Location
-                  </Label>
-                  <Input
-                    id="location"
-                    placeholder="Enter city, state, or ZIP code"
-                    value={formData.location}
-                    onChange={(e) => handleInputChange('location', e.target.value)}
-                    className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
-
-                {/* Property Type */}
-                <div className="space-y-2">
-                  <Label className="text-black">Property Type</Label>
-                  <Select value={formData.propertyType} onValueChange={(value) => handleInputChange('propertyType', value)}>
-                    <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                      <SelectValue placeholder="Select property type" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white border border-gray-200">
-                      <SelectItem value="single-family">Single Family Home</SelectItem>
-                      <SelectItem value="condo">Condominium</SelectItem>
-                      <SelectItem value="townhouse">Townhouse</SelectItem>
-                      <SelectItem value="apartment">Apartment</SelectItem>
-                      <SelectItem value="villa">Villa</SelectItem>
-                      <SelectItem value="duplex">Duplex</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Bedrooms and Bathrooms */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label className="text-black">Bedrooms</Label>
-                    <Select value={formData.bedrooms} onValueChange={(value) => handleInputChange('bedrooms', value)}>
-                      <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                        <SelectValue placeholder="Bedrooms" />
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <Label htmlFor="location" className="text-gray-700">
+                      <MapPin className="inline w-4 h-4 mr-1" />
+                      Location
+                    </Label>
+                    <Select onValueChange={(value) => handleInputChange('location', value)} required>
+                      <SelectTrigger className="border-gray-300 focus:border-brand-blue focus:ring-brand-blue bg-white">
+                        <SelectValue placeholder="Select location" />
                       </SelectTrigger>
                       <SelectContent className="bg-white border border-gray-200">
-                        {[1, 2, 3, 4, 5, 6].map(num => (
-                          <SelectItem key={num} value={num.toString()}>{num}+ bed{num > 1 ? 's' : ''}</SelectItem>
-                        ))}
+                        <SelectItem value="East Legon">East Legon, Accra</SelectItem>
+                        <SelectItem value="Cantonments">Cantonments, Accra</SelectItem>
+                        <SelectItem value="Airport Residential">Airport Residential, Accra</SelectItem>
+                        <SelectItem value="Spintex">Spintex, Accra</SelectItem>
+                        <SelectItem value="Tema">Tema, Greater Accra</SelectItem>
+                        <SelectItem value="Kumasi">Kumasi, Ashanti</SelectItem>
+                        <SelectItem value="Takoradi">Takoradi, Western</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
-                    <Label className="text-black">Bathrooms</Label>
-                    <Select value={formData.bathrooms} onValueChange={(value) => handleInputChange('bathrooms', value)}>
-                      <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                        <SelectValue placeholder="Bathrooms" />
+
+                  <div>
+                    <Label htmlFor="propertyType" className="text-gray-700">
+                      <Home className="inline w-4 h-4 mr-1" />
+                      Property Type
+                    </Label>
+                    <Select onValueChange={(value) => handleInputChange('propertyType', value)} required>
+                      <SelectTrigger className="border-gray-300 focus:border-brand-blue focus:ring-brand-blue bg-white">
+                        <SelectValue placeholder="Select property type" />
                       </SelectTrigger>
                       <SelectContent className="bg-white border border-gray-200">
-                        {[1, 1.5, 2, 2.5, 3, 3.5, 4, 5].map(num => (
-                          <SelectItem key={num} value={num.toString()}>{num}+ bath{num > 1 ? 's' : ''}</SelectItem>
-                        ))}
+                        <SelectItem value="Villa">Villa</SelectItem>
+                        <SelectItem value="House">House</SelectItem>
+                        <SelectItem value="Apartment">Apartment</SelectItem>
+                        <SelectItem value="Penthouse">Penthouse</SelectItem>
+                        <SelectItem value="Townhouse">Townhouse</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
-                </div>
 
-                {/* Square Footage */}
-                <div className="space-y-2">
-                  <Label htmlFor="squareFootage" className="text-black">Square Footage</Label>
-                  <Input
-                    id="squareFootage"
-                    type="number"
-                    placeholder="e.g., 2500"
-                    value={formData.squareFootage}
-                    onChange={(e) => handleInputChange('squareFootage', e.target.value)}
-                    className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="bedrooms" className="text-gray-700">
+                        <Bed className="inline w-4 h-4 mr-1" />
+                        Bedrooms
+                      </Label>
+                      <Input
+                        id="bedrooms"
+                        type="number"
+                        min="1"
+                        max="10"
+                        value={formData.bedrooms}
+                        onChange={(e) => handleInputChange('bedrooms', e.target.value)}
+                        placeholder="e.g. 3"
+                        required
+                        className="border-gray-300 focus:border-brand-blue focus:ring-brand-blue"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="bathrooms" className="text-gray-700">
+                        <Bath className="inline w-4 h-4 mr-1" />
+                        Bathrooms
+                      </Label>
+                      <Input
+                        id="bathrooms"
+                        type="number"
+                        min="1"
+                        max="10"
+                        value={formData.bathrooms}
+                        onChange={(e) => handleInputChange('bathrooms', e.target.value)}
+                        placeholder="e.g. 2"
+                        required
+                        className="border-gray-300 focus:border-brand-blue focus:ring-brand-blue"
+                      />
+                    </div>
+                  </div>
 
-                {/* Year Built and Lot Size */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="yearBuilt" className="text-black">Year Built</Label>
+                  <div>
+                    <Label htmlFor="squareFeet" className="text-gray-700">
+                      <Square className="inline w-4 h-4 mr-1" />
+                      Square Feet
+                    </Label>
+                    <Input
+                      id="squareFeet"
+                      type="number"
+                      min="500"
+                      value={formData.squareFeet}
+                      onChange={(e) => handleInputChange('squareFeet', e.target.value)}
+                      placeholder="e.g. 2500"
+                      required
+                      className="border-gray-300 focus:border-brand-blue focus:ring-brand-blue"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="yearBuilt" className="text-gray-700">Year Built</Label>
                     <Input
                       id="yearBuilt"
                       type="number"
-                      placeholder="e.g., 2010"
+                      min="1950"
+                      max={new Date().getFullYear()}
                       value={formData.yearBuilt}
                       onChange={(e) => handleInputChange('yearBuilt', e.target.value)}
-                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      placeholder="e.g. 2020"
+                      required
+                      className="border-gray-300 focus:border-brand-blue focus:ring-brand-blue"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="lotSize" className="text-black">Lot Size (sq ft)</Label>
-                    <Input
-                      id="lotSize"
-                      type="number"
-                      placeholder="e.g., 8000"
-                      value={formData.lotSize}
-                      onChange={(e) => handleInputChange('lotSize', e.target.value)}
-                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                    />
-                  </div>
-                </div>
 
-                {/* Predict Button */}
-                <Button
-                  onClick={handlePredict}
-                  disabled={isLoading || !formData.location || !formData.propertyType}
-                  className="w-full blue-gradient hover:blue-gradient-hover h-12 text-lg font-semibold text-white"
-                >
-                  {isLoading ? (
-                    <div className="flex items-center">
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      Analyzing...
-                    </div>
-                  ) : (
-                    <>
-                      <Calculator className="w-5 h-5 mr-2" />
-                      Get Price Estimate
-                    </>
-                  )}
-                </Button>
+                  <div>
+                    <Label htmlFor="condition" className="text-gray-700">Property Condition</Label>
+                    <Select onValueChange={(value) => handleInputChange('condition', value)} required>
+                      <SelectTrigger className="border-gray-300 focus:border-brand-blue focus:ring-brand-blue bg-white">
+                        <SelectValue placeholder="Select condition" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white border border-gray-200">
+                        <SelectItem value="Excellent">Excellent</SelectItem>
+                        <SelectItem value="Good">Good</SelectItem>
+                        <SelectItem value="Fair">Fair</SelectItem>
+                        <SelectItem value="Needs Renovation">Needs Renovation</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full brand-button"
+                  >
+                    {isLoading ? 'Calculating...' : 'Get Price Estimate'}
+                  </Button>
+                </form>
               </CardContent>
             </Card>
 
-            {/* Results */}
+            {/* Results Section */}
             <div className="space-y-6">
-              {prediction ? (
-                <>
-                  {/* Main Price Card */}
-                  <Card className="shadow-xl border-0 blue-gradient text-white">
-                    <CardHeader>
-                      <CardTitle className="flex items-center text-2xl">
-                        <DollarSign className="w-6 h-6 mr-2" />
-                        Estimated Value
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-5xl font-bold mb-2">
-                        {formatPrice(prediction.estimatedPrice)}
+              {prediction && (
+                <Card className="border border-gray-200 shadow-lg bg-gradient-to-br from-brand-blue/5 to-white">
+                  <CardHeader>
+                    <CardTitle className="flex items-center text-gray-900">
+                      <TrendingUp className="w-5 h-5 mr-2 text-brand-blue" />
+                      AI Price Prediction
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="text-center p-6 bg-white rounded-lg border border-gray-200 shadow-sm">
+                      <div className="text-sm text-gray-600 mb-2">Estimated Market Value</div>
+                      <div className="text-4xl font-bold text-gray-900 mb-2">
+                        GHS {prediction.estimatedPrice.toLocaleString()}
                       </div>
-                      <div className="text-blue-100 mb-4">
-                        Range: {formatPrice(prediction.priceRange.min)} - {formatPrice(prediction.priceRange.max)}
+                      <div className="text-sm text-green-600 font-medium">
+                        {prediction.confidence}% Confidence Level
                       </div>
-                      <div className="flex items-center justify-between bg-white/20 rounded-lg p-4">
-                        <div>
-                          <div className="text-sm text-blue-100">Model Accuracy</div>
-                          <div className="text-2xl font-bold">{prediction.accuracy}%</div>
-                        </div>
-                        <div className="flex items-center">
-                          <TrendingUp className={`w-6 h-6 mr-2 ${prediction.marketTrend === 'up' ? 'text-green-300' : 'text-red-300'}`} />
-                          <div>
-                            <div className="text-sm text-blue-100">Market Trend</div>
-                            <div className="text-lg font-semibold">
-                              {prediction.marketTrend === 'up' ? '+' : '-'}{prediction.trendPercentage}%
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Additional Info Cards */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Card className="shadow-lg bg-white border border-gray-200">
-                      <CardContent className="p-6">
-                        <div className="text-center">
-                          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <TrendingUp className="w-6 h-6 text-green-600" />
-                          </div>
-                          <div className="text-sm text-gray-600 mb-1">Market Position</div>
-                          <div className="text-xl font-bold text-black">Above Average</div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className="shadow-lg bg-white border border-gray-200">
-                      <CardContent className="p-6">
-                        <div className="text-center">
-                          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <Calculator className="w-6 h-6 text-blue-600" />
-                          </div>
-                          <div className="text-sm text-gray-600 mb-1">Price per Sq Ft</div>
-                          <div className="text-xl font-bold text-black">
-                            {formData.squareFootage ? formatPrice(prediction.estimatedPrice / parseInt(formData.squareFootage)) : 'N/A'}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </>
-              ) : (
-                <Card className="shadow-xl border-2 border-dashed border-gray-300 bg-white">
-                  <CardContent className="p-12 text-center">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Calculator className="w-8 h-8 text-blue-600" />
                     </div>
-                    <h3 className="text-xl font-semibold text-black mb-2">Ready to Predict</h3>
-                    <p className="text-gray-600">
-                      Fill in the property details to get your AI-powered price estimate
-                    </p>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                        <div className="text-sm text-gray-600 mb-1">Market Trend</div>
+                        <div className="text-lg font-semibold text-green-600">{prediction.marketTrend}</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                        <div className="text-sm text-gray-600 mb-1">Price per sq ft</div>
+                        <div className="text-lg font-semibold text-gray-900">
+                          GHS {Math.round(prediction.estimatedPrice / parseInt(formData.squareFeet))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-blue-50 p-4 rounded-lg">
+                      <h4 className="font-semibold text-gray-900 mb-2">AI Analysis</h4>
+                      <p className="text-sm text-gray-700">
+                        Based on current market data, comparable sales, and location factors, 
+                        this property shows strong value potential in the {formData.location} area. 
+                        The estimate considers recent transactions and market trends.
+                      </p>
+                    </div>
                   </CardContent>
                 </Card>
               )}
+
+              {/* Info Card */}
+              <Card className="border border-gray-200 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-gray-900">How Our AI Works</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-brand-blue rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-bold">1</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">Data Analysis</h4>
+                      <p className="text-sm text-gray-600">Analyzes thousands of recent sales and market trends</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-brand-blue rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-bold">2</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">Location Factors</h4>
+                      <p className="text-sm text-gray-600">Considers neighborhood amenities and accessibility</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-brand-blue rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-bold">3</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">Smart Prediction</h4>
+                      <p className="text-sm text-gray-600">Generates accurate estimates with confidence levels</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
