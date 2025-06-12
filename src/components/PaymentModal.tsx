@@ -24,7 +24,7 @@ const PaymentModal = ({ isOpen, onClose, property, onPaymentSuccess }: PaymentMo
     setIsProcessing(true);
     
     const handler = window.PaystackPop.setup({
-      key: 'pk_test_54d0afa0a28d96055f4f4b26e05d11e4877f14e5',
+      key: 'pk_live_abd71123626a60688c205672d269418120e94789',
       email: 'customer@email.com', // This would typically come from auth context
       amount: parseFloat(property?.price?.replace(/[₵,]/g, '') || '0') * 100, // Convert to kobo
       currency: 'GHS',

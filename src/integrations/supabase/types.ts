@@ -9,7 +9,84 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          first_name?: string | null
+          id: string
+          last_name?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      properties: {
+        Row: {
+          area_sqft: number | null
+          bathrooms: number | null
+          bedrooms: number | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          image_urls: string[] | null
+          is_active: boolean | null
+          location: string
+          price: number
+          property_type: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          area_sqft?: number | null
+          bathrooms?: number | null
+          bedrooms?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          image_urls?: string[] | null
+          is_active?: boolean | null
+          location: string
+          price: number
+          property_type: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          area_sqft?: number | null
+          bathrooms?: number | null
+          bedrooms?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          image_urls?: string[] | null
+          is_active?: boolean | null
+          location?: string
+          price?: number
+          property_type?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
